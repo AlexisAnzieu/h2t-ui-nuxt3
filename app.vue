@@ -1,14 +1,14 @@
 <template>
   <div class="flex">
     <!-- Burger Menu for Mobile -->
-    <div v-if="isMobile" class="burger-menu" @click="toggleNav">
+    <div v-if="$device.isMobile" class="burger-menu" @click="toggleNav">
       <div class="burger-bar"></div>
       <div class="burger-bar"></div>
       <div class="burger-bar"></div>
     </div>
 
     <!-- Left Navigation (Eggs) -->
-    <div v-show="!isMobile || isNavVisible" class="eggs">
+    <div v-show="!$device.isMobile || isNavVisible" class="eggs">
       <div class="flex flex-col items-center">
         <div
           class="egg-cover"
@@ -81,27 +81,17 @@
 </template>
 
 <script>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
   setup() {
     const route = useRoute();
     const isNavVisible = ref(false);
-    const isMobile = ref(false);
 
     const toggleNav = () => {
       isNavVisible.value = !isNavVisible.value;
     };
-
-    const checkMobile = () => {
-      isMobile.value = window.innerWidth <= 768;
-    };
-
-    onMounted(() => {
-      checkMobile();
-      window.addEventListener("resize", checkMobile);
-    });
 
     const eggs = computed(() => {
       const tabs = ["transition", "boiler", "talk", "teach", "market", "tech"];
@@ -112,7 +102,6 @@ export default {
       eggs,
       route,
       isNavVisible,
-      isMobile,
       toggleNav,
     };
   },
