@@ -1,12 +1,20 @@
 <template>
   <div class="flex">
-    <div
-      @mouseleave="leftNavWidth = 1"
-      @mouseover="leftNavWidth = isMobile ? 18 : 7"
-      class="eggs"
-    >
+    <!-- Burger Menu for Mobile -->
+    <div v-if="isMobile" class="burger-menu" @click="toggleNav">
+      <div class="burger-bar"></div>
+      <div class="burger-bar"></div>
+      <div class="burger-bar"></div>
+    </div>
+
+    <!-- Left Navigation (Eggs) -->
+    <div v-show="!isMobile || isNavVisible" class="eggs">
       <div class="flex flex-col items-center">
-        <div class="egg-cover" :class="{ active: $route.path === '/' }">
+        <div
+          class="egg-cover"
+          :class="{ active: $route.path === '/' }"
+          @click="closeNav"
+        >
           <router-link to="/">
             <div class="egg-title" :class="{ active: $route.path === '/' }">
               .accueil
@@ -17,11 +25,13 @@
             class="bg-image"
           ></div>
         </div>
+
         <div
           v-for="egg in eggs"
           :key="egg"
           class="egg-cover"
           :class="{ active: $route.path.startsWith(`/eggs/${egg}`) }"
+          @click="closeNav"
         >
           <router-link
             v-if="egg !== 'market' && egg !== 'tech'"
@@ -59,6 +69,7 @@
       </div>
     </div>
 
+    <!-- Main Content Section -->
     <div class="section flex-1">
       <div>
         <NuxtLayout>
@@ -70,12 +81,27 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
   setup() {
     const route = useRoute();
+    const isNavVisible = ref(false);
+    const isMobile = ref(false);
+
+    const toggleNav = () => {
+      isNavVisible.value = !isNavVisible.value;
+    };
+
+    const checkMobile = () => {
+      isMobile.value = window.innerWidth <= 768;
+    };
+
+    onMounted(() => {
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+    });
 
     const eggs = computed(() => {
       const tabs = ["transition", "boiler", "talk", "teach", "market", "tech"];
@@ -85,6 +111,9 @@ export default {
     return {
       eggs,
       route,
+      isNavVisible,
+      isMobile,
+      toggleNav,
     };
   },
 };
@@ -118,7 +147,7 @@ html {
   text-align: center;
   transition: width 0.5s;
   background: rgba(6, 3, 51, 0.925);
-  width: 30vw;
+  width: 50vw;
 }
 
 .egg-cover {
@@ -173,5 +202,30 @@ html {
   height: 100vh;
   padding-left: 6px;
   transition: width 0.5s;
+}
+
+/* Burger Menu Styles */
+.burger-menu {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+}
+
+.burger-bar {
+  width: 100%;
+  height: 3px;
+  background-color: rgb(4, 4, 4);
+  transition: all 0.3s ease;
+}
+
+.burger-bar:hover {
+  background-color: gray;
 }
 </style>
