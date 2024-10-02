@@ -21,7 +21,7 @@ const disabledDoor = computed(() => {
 const openDoor = async () => {
   useNuxtApp().$toast.promise(
     fetch("/api/openDoor", {
-      method: "POST",
+      method: "GET",
     })
       .then((result) => result.json())
       .then((data) => {

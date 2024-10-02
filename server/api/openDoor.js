@@ -6,6 +6,7 @@ export default eventHandler(async (req) => {
         const data = await result.json();
         return send(req, JSON.stringify(data));
     } catch (error) {
+        console.log(error);
         return send(req, JSON.stringify({ msg: 'Error' }));
     }
 });

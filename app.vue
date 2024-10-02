@@ -1,14 +1,22 @@
 <template>
   <div class="flex">
     <!-- Burger Menu for Mobile -->
-    <div v-if="$device.isMobile" class="burger-menu" @click="toggleNav">
+    <div
+      v-if="$device.isMobile && !isNavVisible"
+      class="burger-menu"
+      @click="toggleNav"
+    >
       <div class="burger-bar"></div>
       <div class="burger-bar"></div>
       <div class="burger-bar"></div>
     </div>
 
     <!-- Left Navigation (Eggs) -->
-    <div v-show="!$device.isMobile || isNavVisible" class="eggs">
+    <div
+      v-show="!$device.isMobile || isNavVisible"
+      class="eggs"
+      :style="{ width: $device.isMobile ? '100vw' : '30vw' }"
+    >
       <div class="flex flex-col items-center">
         <div
           class="egg-cover"
@@ -103,6 +111,9 @@ export default {
       route,
       isNavVisible,
       toggleNav,
+      closeNav: () => {
+        isNavVisible.value = false;
+      },
     };
   },
 };
@@ -136,7 +147,6 @@ html {
   text-align: center;
   transition: width 0.5s;
   background: rgba(6, 3, 51, 0.925);
-  width: 50vw;
 }
 
 .egg-cover {
