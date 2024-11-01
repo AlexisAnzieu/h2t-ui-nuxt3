@@ -15,6 +15,7 @@
           :title="book.title"
           :author="book.author"
           :summary="book.summary"
+          :link="book.link"
         />
       </div>
     </div>
@@ -32,6 +33,7 @@ const books = ref([
     summary:
       "Embark on an epic journey through the world of Vue.js. This comprehensive guide takes you from the basics to advanced concepts, helping you master the art of building dynamic and efficient web applications. Discover the power of reactive programming and component-based architecture in this must-read for aspiring Vue developers.",
     color: "blue",
+    link: "https://example.com/vue-odyssey",
   },
   {
     title: "Learning Vue.js 3",
@@ -39,6 +41,7 @@ const books = ref([
     summary:
       "A practical guide to building modern web applications with Vue.js 3. Learn the fundamentals and advanced features of Vue.js, including the Composition API, Vue Router, and Vuex.",
     color: "green",
+    link: "https://example.com/learning-vue3",
   },
   {
     title: "Vue.js Design Patterns",
@@ -46,6 +49,7 @@ const books = ref([
     summary:
       "Explore common design patterns and best practices for developing scalable and maintainable Vue.js applications. This book covers patterns for state management, component design, and more.",
     color: "green",
+    link: "https://example.com/vue-design-patterns",
   },
   {
     title: "The Vue.js Odyssey",
@@ -53,6 +57,7 @@ const books = ref([
     summary:
       "Embark on an epic journey through the world of Vue.js. This comprehensive guide takes you from the basics to advanced concepts, helping you master the art of building dynamic and efficient web applications. Discover the power of reactive programming and component-based architecture in this must-read for aspiring Vue developers.",
     color: "blue",
+    link: "https://example.com/vue-odyssey",
   },
   {
     title: "Learning Vue.js 3",
@@ -60,6 +65,7 @@ const books = ref([
     summary:
       "A practical guide to building modern web applications with Vue.js 3. Learn the fundamentals and advanced features of Vue.js, including the Composition API, Vue Router, and Vuex.",
     color: "blue",
+    link: "https://example.com/learning-vue3",
   },
   {
     title: "Vue.js Design Patterns",
@@ -67,6 +73,7 @@ const books = ref([
     summary:
       "Explore common design patterns and best practices for developing scalable and maintainable Vue.js applications. This book covers patterns for state management, component design, and more.",
     color: "purple",
+    link: "https://example.com/vue-design-patterns",
   },
 ]);
 </script>

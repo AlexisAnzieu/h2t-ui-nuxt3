@@ -33,12 +33,21 @@
 
       <!-- Back Cover -->
       <div
-        class="absolute w-full h-full backface-hidden rounded-l-lg shadow-2xl p-6 transform rotate-y-180"
+        class="absolute w-full h-full backface-hidden rounded-l-lg shadow-2xl p-6 transform rotate-y-180 flex flex-col justify-between"
         :style="coverStyle"
         aria-label="Book back cover"
       >
-        <h3 class="text-2xl font-semibold mb-4">Summary</h3>
-        <p class="text-sm">{{ summary }}</p>
+        <div>
+          <h3 class="text-2xl font-semibold mb-4 text-white">Summary</h3>
+          <p class="text-sm text-white">{{ summary }}</p>
+        </div>
+
+        <button
+          class="px-4 py-2 bg-white text-black font-semibold rounded shadow-md hover:bg-gray-200"
+          @click="redirectToLink"
+        >
+          Acheter
+        </button>
       </div>
     </div>
   </div>
@@ -57,6 +66,7 @@ const props = defineProps({
     default: "blue",
     validator: (value) => ["blue", "green", "purple"].includes(value),
   },
+  link: String,
 });
 
 const isFlipped = ref(false);
@@ -91,6 +101,12 @@ const coverStyle = computed(() => ({
   })`,
 }));
 const iconClasses = computed(() => `text-${props.color}-500 font-bold`);
+
+const redirectToLink = () => {
+  if (props.link) {
+    window.location.href = props.link;
+  }
+};
 </script>
 
 <style scoped>
