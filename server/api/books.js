@@ -30,7 +30,7 @@ export default eventHandler(async (req) => {
                 "politique",
                 "contestation",
             ],
-            link: "https://www.amazon.ca/Lan-01-Gébé/dp/2377311768",
+            link: "https://www.planetebd.com/bd/l-association/l-an-1/-/27892.html",
         },
         {
             title: "Croire aux fauves",
@@ -45,7 +45,7 @@ export default eventHandler(async (req) => {
                 "survie",
                 "relation homme-animal",
             ],
-            link: "https://www.amazon.ca/Croire-aux-fauves-Natassja-Martin/dp/2072789117",
+            link: "https://www.leslibraires.ca/livres/croire-aux-fauves-nastassja-martin-9782072849787.html",
         },
         {
             title: "Ethnographie des mondes à venir",
@@ -69,7 +69,7 @@ export default eventHandler(async (req) => {
                 "Une saga familiale traversant les grands bouleversements du XXe siècle. Ce roman explore les thèmes de la mémoire, de la famille et de l'identité.",
             color: "purple",
             tags: ["saga familiale", "histoire", "mémoire", "identité", "XXe siècle"],
-            link: "https://www.amazon.ca/lumière-vacillante-Nino-Haratischwili/dp/2381960198",
+            link: "https://www.leslibraires.ca/livres/la-lumiere-vacillante-nino-haratischwili-9782072996016.html",
         },
         {
             title: "La Longue Route",
@@ -84,7 +84,7 @@ export default eventHandler(async (req) => {
                 "spiritualité",
                 "récit autobiographique",
             ],
-            link: "https://www.amazon.ca/longue-route-Bernard-Moitessier/dp/2732488593",
+            link: "https://www.amazon.ca/-/fr/Bernard-Moitessier-ebook/dp/B07FY7PRCC",
         },
         {
             title: "Comme si nous étions déjà libres",
@@ -123,7 +123,7 @@ export default eventHandler(async (req) => {
                 "environnement",
                 "fiction climatique",
             ],
-            link: "https://www.amazon.ca/Là-où-feu-lours-Darleux/dp/2072876168",
+            link: "https://www.leslibraires.ca/livres/la-ou-le-feu-et-l-corinne-morel-darleux-9782377292028.html",
         },
         {
             title: "Les Racines du ciel",
@@ -138,7 +138,7 @@ export default eventHandler(async (req) => {
                 "engagement",
                 "conservation",
             ],
-            link: "https://www.amazon.ca/racines-du-ciel-Romain-Gary/dp/2070369218",
+            link: "https://www.babelio.com/livres/Gary-Les-Racines-du-ciel/1616",
         },
         {
             title: "L'Art de la joie",
@@ -153,7 +153,7 @@ export default eventHandler(async (req) => {
                 "roman historique",
                 "liberté",
             ],
-            link: "https://www.amazon.ca/LArt-joie-Goliarda-Sapienza/dp/2373850080",
+            link: "https://www.leslibraires.ca/livres/l-art-de-la-joie-goliarda-sapienza-9782370551023.html",
         },
         {
             title: "Les Yeux dans les arbres",
@@ -171,7 +171,7 @@ export default eventHandler(async (req) => {
                 "Un roman pastoral et poétique dans lequel Bosco explore la relation de l'homme avec la terre et la ruralité provençale.",
             color: "green",
             tags: ["Provence", "ruralité", "terroir", "nature", "poésie"],
-            link: "https://www.amazon.ca/Mas-Théotime-Henri-Bosco/dp/2070371115",
+            link: "https://www.leslibraires.ca/livres/le-mas-theotime-henri-bosco-9782070361687.html",
         },
         {
             title: "Le Pays des marées",
@@ -186,7 +186,7 @@ export default eventHandler(async (req) => {
                 "traditions",
                 "survie",
             ],
-            link: "https://www.amazon.ca/Hungry-Tide-Novel-Amitav-Ghosh/dp/0618711666",
+            link: "https://www.amazon.ca/Hungry-Tide-Amitav-Ghosh/dp/0670082198",
         },
         {
             title: "La trahison d'Einstein",
@@ -195,7 +195,7 @@ export default eventHandler(async (req) => {
                 "Une exploration des dilemmes moraux d'Einstein, confronté aux conséquences de la bombe atomique et de la trahison de ses idéaux pacifistes.",
             color: "blue",
             tags: ["science", "éthique", "histoire", "physique", "pacifisme"],
-            link: "https://www.amazon.ca/trahison-dEinstein-Eric-Emmanuel-Schmitt/dp/2226445781",
+            link: "https://www.renaud-bray.com/Livre_Numerique_Produit.aspx?id=1515674&def=Trahison+d%27Einstein(La)%2cSCHMITT%2c+%c3%89RIC-EMMANUEL%2c9782226302199",
         },
         {
             title: "Le Vagabond des étoiles",
@@ -204,7 +204,7 @@ export default eventHandler(async (req) => {
                 "L'histoire captivante d'un homme emprisonné qui échappe à sa réalité en voyageant mentalement dans le temps et l'espace.",
             color: "purple",
             tags: ["prison", "voyage mental", "aventure", "spiritualité", "évasion"],
-            link: "https://www.amazon.ca/Vagabond-étoiles-Jack-London/dp/2253174271",
+            link: "https://www.amazon.ca/-/fr/JACK-LONDON/dp/2859406816",
         },
         {
             title: "La Fête au bouc",
@@ -213,7 +213,7 @@ export default eventHandler(async (req) => {
                 "Un roman intense et historique qui dépeint la dictature de Trujillo en République Dominicaine à travers les yeux de plusieurs personnages.",
             color: "purple",
             tags: ["dictature", "Amérique latine", "politique", "histoire", "pouvoir"],
-            link: "https://www.amazon.ca/Fête-au-Bouc-Mario-Vargas/dp/2070417840",
+            link: "https://www.renaud-bray.com/Livres_Produit.aspx?id=562193&def=F%c3%aate+au+bouc(La)%2cVARGAS+LLOSA%2c+MARIO%2c9782070314126",
         },
         {
             title: "Aucune bête aussi féroce",
@@ -222,7 +222,7 @@ export default eventHandler(async (req) => {
                 "Les mémoires d'un ancien criminel qui plonge dans les rouages de la criminalité et de la rédemption, offrant un regard brut et réaliste.",
             color: "purple",
             tags: ["crime", "prison", "rédemption", "autobiographie", "société"],
-            link: "https://www.amazon.ca/No-Beast-So-Fierce-Novel/dp/0393338657",
+            link: "https://www.amazon.ca/No-Beast-Fierce-Edward-Bunker/dp/1842432664",
         },
     ];
 
