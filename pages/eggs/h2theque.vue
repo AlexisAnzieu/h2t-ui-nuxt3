@@ -22,7 +22,7 @@
             <button
               class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors"
             >
-              Acheter
+              Offrir
             </button>
           </a>
         </div>
