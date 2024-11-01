@@ -17,10 +17,14 @@
       >
         <h2 class="text-3xl font-extrabold text-white">{{ title }}</h2>
         <p class="text-lg text-white">{{ author }}</p>
-        <div
-          class="absolute bottom-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md"
-        >
-          <span :class="iconClasses">B</span>
+        <div class="flex flex-wrap mt-4">
+          <span
+            v-for="tag in tags"
+            :key="tag"
+            class="bg-white text-black text-xs font-semibold mr-2 mb-2 px-3 py-1 rounded-full shadow-sm"
+          >
+            {{ tag }}
+          </span>
         </div>
       </div>
 
@@ -38,7 +42,7 @@
         aria-label="Book back cover"
       >
         <div>
-          <h3 class="text-2xl font-semibold mb-4 text-white">Summary</h3>
+          <h3 class="text-2xl font-semibold mb-4 text-white">Résumé</h3>
           <p class="text-sm text-white">{{ summary }}</p>
         </div>
 
@@ -67,6 +71,10 @@ const props = defineProps({
     validator: (value) => ["blue", "green", "purple"].includes(value),
   },
   link: String,
+  tags: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const isFlipped = ref(false);
