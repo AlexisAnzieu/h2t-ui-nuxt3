@@ -15,7 +15,10 @@
     <div
       v-show="!$device.isMobile || isNavVisible"
       class="eggs"
-      :style="{ width: $device.isMobile ? '100vw' : '30vw' }"
+      :style="{
+        width: '300px',
+        maxWidth: $device.isMobile ? '100vw' : '20vw',
+      }"
     >
       <div class="flex flex-col items-center">
         <div
