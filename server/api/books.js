@@ -226,6 +226,11 @@ export default eventHandler(async (req) => {
         },
     ];
 
-    return send(req, JSON.stringify(books))
+    const { limit } = getQuery(req)
+    if (!isNaN(limit) && limit > 0) {
+        return books.sort(() => 0.5 - Math.random()).slice(0, limit);
+    }
+
+    return send(req, JSON.stringify(responseBooks));
 });
 
