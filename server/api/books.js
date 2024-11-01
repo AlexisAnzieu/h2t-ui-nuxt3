@@ -231,6 +231,6 @@ export default eventHandler(async (req) => {
         return books.sort(() => 0.5 - Math.random()).slice(0, limit);
     }
 
-    return send(req, JSON.stringify(responseBooks));
+    return books;
 });
 
