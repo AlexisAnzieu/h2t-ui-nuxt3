@@ -41,10 +41,7 @@
           :class="{ active: $route.path.startsWith(`/eggs/${egg}`) }"
           @click="closeNav"
         >
-          <router-link
-            v-if="egg !== 'market' && egg !== 'tech'"
-            :to="`/eggs/${egg}`"
-          >
+          <router-link v-if="egg !== 'market'" :to="`/eggs/${egg}`">
             <div
               class="egg-title"
               :class="{ active: $route.path.startsWith(`/eggs/${egg}`) }"
@@ -59,14 +56,6 @@
             href="https://www.partage.club/"
           >
             <div class="egg-title">.partage</div>
-          </a>
-
-          <a
-            v-if="egg === 'tech'"
-            target="_blank"
-            href="https://tally.so/r/wd0XVo"
-          >
-            <div class="egg-title">.tech</div>
           </a>
 
           <div
@@ -102,7 +91,14 @@ export default {
     };
 
     const eggs = computed(() => {
-      const tabs = ["transition", "boiler", "talk", "teach", "market", "tech"];
+      const tabs = [
+        "transition",
+        "boiler",
+        "talk",
+        "teach",
+        "market",
+        "theque",
+      ];
       return tabs.sort();
     });
 
