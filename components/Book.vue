@@ -108,7 +108,6 @@ const coverStyle = computed(() => ({
     colors[props.color][700]
   })`,
 }));
-const iconClasses = computed(() => `text-${props.color}-500 font-bold`);
 
 const redirectToLink = () => {
   if (props.link) {
