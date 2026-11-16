@@ -1,8 +1,8 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: "Talk",
-  ogTitle: "H2T.talk",
-  description: "H2TALK, le podcast sans préparation du réseau H2T",
+  title: "Balados",
+  ogTitle: "H2T.balados",
+  description: "H2TALK, le balado sans préparation du réseau H2T",
   ogImage: "/images/facebook-logo-OG-talk.png",
 });
 
@@ -37,11 +37,11 @@ const episodes = [
 <template>
   <div>
     <UiPageHeader
-      egg="talk"
+      egg="balados"
       :lines="['Zéro prépa.', 'Zéro sujet.', 'Zéro expérience.']"
       :accent="2"
     >
-      H2TALK, c'est le podcast de la communauté : on s'assoit, on lance
+      H2TALK, c'est le balado de la communauté : on s'assoit, on lance
       l'enregistrement, et on voit où la conversation nous emmène.
     </UiPageHeader>
 

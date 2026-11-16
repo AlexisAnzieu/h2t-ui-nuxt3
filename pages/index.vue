@@ -24,7 +24,7 @@ const questionLink = mailto("Je souhaite poser une question sur H2T");
       locaux. Un forum de partage de biens, de services et d'idées, dans un
       cercle restreint.
       <template #actions>
-        <UiButton to="/eggs/boiler" icon="arrow-right" size="lg">
+        <UiButton to="/eggs/musique" icon="arrow-right" size="lg">
           Explorer les projets
         </UiButton>
         <UiButton :href="questionLink" variant="secondary" size="lg">

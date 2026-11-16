@@ -2,8 +2,8 @@
 import { mailto } from "~/data/navigation";
 
 useSeoMeta({
-  title: "Boiler",
-  ogTitle: "H2T.boiler",
+  title: "Musique",
+  ogTitle: "H2T.musique",
   description: "Projets musicaux récurrents du réseau communautaire H2T",
   ogImage: "/images/facebook-logo-OG-boiler.png",
 });
@@ -83,7 +83,7 @@ const sessions: Session[] = [
     title: "Christmas",
     type: "text",
     description:
-      "Une prestation vinyle live de 2 heures, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
+      "Une prestation vinyle en direct de 2 heures, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
   },
   {
     day: "06",
@@ -92,7 +92,7 @@ const sessions: Session[] = [
     title: "Rap session",
     type: "text",
     description:
-      "Une prestation rap live de 40 minutes, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
+      "Une prestation rap en direct de 40 minutes, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
   },
   {
     day: "09",
@@ -122,12 +122,12 @@ const typeStyle = {
 <template>
   <div>
     <UiPageHeader
-      egg="boiler"
+      egg="musique"
       :lines="['Le son', 'du Plateau']"
       :accent="1"
     >
-      Des soirées live récurrentes, du jazz au rap en passant par le vinyle.
-      Remonte le fil des sessions enregistrées.
+      Des soirées musicales en direct, du jazz au rap en passant par le vinyle.
+      Remonte le fil des soirées enregistrées.
     </UiPageHeader>
 
     <div class="space-y-20">
@@ -204,7 +204,7 @@ const typeStyle = {
                     <span class="font-bold">Tu souhaites apporter ton aide ?</span>
                   </p>
                   <UiButton
-                    :href="mailto(`Session ${session.title}`)"
+                    :href="mailto(`Soirée ${session.title}`)"
                     variant="sun"
                     size="sm"
                     class="relative mt-5"

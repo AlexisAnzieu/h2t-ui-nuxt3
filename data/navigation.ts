@@ -1,5 +1,5 @@
 export interface NavItem {
-  /** Libellé affiché, sans le point (ex: "boiler" → ".boiler") */
+  /** Libellé affiché, sans le point (ex: "balados" → ".balados") */
   label: string;
   /** Numéro d'« édition », affiché comme sur une affiche */
   number: string;
@@ -22,11 +22,11 @@ export const homeItem: NavItem = {
 
 export const eggs: NavItem[] = [
   {
-    label: "boiler",
+    label: "musique",
     number: "01",
-    caption: "Sessions musicales",
+    caption: "Soirées musicales",
     image: "/images/nav/boiler.jpg",
-    to: "/eggs/boiler",
+    to: "/eggs/musique",
   },
   {
     label: "partage",
@@ -36,18 +36,18 @@ export const eggs: NavItem[] = [
     href: "https://www.partage.club/",
   },
   {
-    label: "talk",
+    label: "balados",
     number: "03",
-    caption: "Podcast sans filtre",
+    caption: "Balado sans filtre",
     image: "/images/nav/talk.jpg",
-    to: "/eggs/talk",
+    to: "/eggs/balados",
   },
   {
-    label: "teach",
+    label: "apprendre",
     number: "04",
     caption: "Ateliers & savoirs",
     image: "/images/nav/teach.jpg",
-    to: "/eggs/teach",
+    to: "/eggs/apprendre",
   },
   {
     label: "theque",

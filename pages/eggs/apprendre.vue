@@ -2,8 +2,8 @@
 import { mailto } from "~/data/navigation";
 
 useSeoMeta({
-  title: "Teach",
-  ogTitle: "H2T.teach",
+  title: "Apprendre",
+  ogTitle: "H2T.apprendre",
   description: "Ateliers de la communauté H2T : bonnes pratiques de finances personnelles",
 });
 
@@ -24,7 +24,7 @@ const joinLink = mailto(
 <template>
   <div>
     <UiPageHeader
-      egg="teach"
+      egg="apprendre"
       :lines="['Apprendre', 'les uns', 'des autres']"
       :accent="2"
     >

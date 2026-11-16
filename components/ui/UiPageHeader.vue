@@ -6,7 +6,7 @@ import { findNavItem } from "~/data/navigation";
  */
 const props = withDefaults(
   defineProps<{
-    /** Nom de l'œuf (ex: "boiler") : sert au bandeau N° / légende */
+    /** Nom de l'œuf (ex: "balados") : sert au bandeau N° / légende */
     egg: string;
     /** Titre, une entrée par ligne */
     lines: string[];
