@@ -11,6 +11,7 @@ const answers = [
   { year: "1990", text: "Avec l'essor d'Internet", correct: false },
   { year: "2001", text: "Par William S. Cleveland", correct: false },
 ];
+const letters = ["A", "B", "C", "D"];
 
 const selected = ref<number | null>(null);
 const solved = ref(false);
@@ -32,12 +33,17 @@ const stateOf = (index: number) => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl">
-    <UiPageHeader eyebrow=".data-science · Quiz" title="Quand a été inventé le terme « data science » ?">
+  <div>
+    <UiPageHeader
+      egg="data-science"
+      size="lg"
+      :lines="['Quand a été inventé', 'le terme', '« data science » ?']"
+      :accent="2"
+    >
       Trouve la bonne réponse pour ouvrir la porte.
     </UiPageHeader>
 
-    <div class="space-y-3" role="radiogroup" aria-label="Réponses">
+    <div class="grid gap-5 md:grid-cols-2" role="radiogroup" aria-label="Réponses">
       <button
         v-for="(answer, index) in answers"
         :key="answer.year"
@@ -45,49 +51,55 @@ const stateOf = (index: number) => {
         role="radio"
         :aria-checked="selected === index"
         :disabled="solved && !answer.correct"
-        class="group flex w-full items-center gap-5 rounded-2xl p-4 text-left shadow-card transition-all duration-200 active:scale-[0.99] disabled:opacity-40 md:p-5"
+        class="group relative flex items-stretch overflow-hidden border-2 border-ink text-left shadow-hard-lg transition-[transform,box-shadow] duration-150 enabled:hover:-translate-x-1 enabled:hover:-translate-y-1 active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-35"
         :class="{
-          'bg-white ring-1 ring-paper-200 hover:-translate-y-0.5 hover:ring-plum-300': stateOf(index) === 'idle',
-          'bg-forest-100 ring-2 ring-forest-500': stateOf(index) === 'correct',
-          'animate-shake bg-brand-50 ring-2 ring-brand-500': stateOf(index) === 'wrong',
+          'bg-paper-50': stateOf(index) === 'idle',
+          'bg-riso-green text-white': stateOf(index) === 'correct',
+          'animate-shake bg-brand text-white': stateOf(index) === 'wrong',
         }"
         @click="choose(index)"
       >
         <span
-          class="w-20 shrink-0 font-display text-3xl font-extrabold tabular-nums tracking-tight md:w-24 md:text-4xl"
-          :class="{
-            'text-plum-300 group-hover:text-plum-900': stateOf(index) === 'idle',
-            'text-forest-500': stateOf(index) === 'correct',
-            'text-brand-500': stateOf(index) === 'wrong',
-          }"
+          class="grid w-16 shrink-0 place-items-center border-r-2 border-ink font-display text-4xl font-black font-condensed transition-colors md:w-20"
+          :class="stateOf(index) === 'idle' ? 'bg-sun group-hover:bg-brand group-hover:text-white' : 'bg-ink text-paper'"
         >
-          {{ answer.year }}
+          {{ letters[index] }}
         </span>
-        <span class="flex-1 text-lg text-plum-700">{{ answer.text }}</span>
+        <span class="flex flex-col justify-center p-5">
+          <span class="font-display text-6xl font-black leading-[0.85] font-condensed md:text-7xl">
+            {{ answer.year }}
+          </span>
+          <span class="mt-2 text-lg font-semibold leading-tight">{{ answer.text }}</span>
+        </span>
+
+        <!-- Tampon -->
         <span
           v-if="stateOf(index) !== 'idle'"
-          class="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white"
-          :class="stateOf(index) === 'correct' ? 'bg-forest-500' : 'bg-brand-500'"
+          :key="`stamp-${selected}`"
+          class="absolute right-4 top-4 animate-stamp border-[3px] border-current px-2 py-0.5 font-display text-2xl font-black uppercase font-condensed md:text-3xl"
+          aria-hidden="true"
         >
-          <UiIcon :name="stateOf(index) === 'correct' ? 'check' : 'x'" :size="18" />
+          {{ stateOf(index) === "correct" ? "Bravo !" : "Raté" }}
         </span>
       </button>
     </div>
 
     <Transition
-      enter-active-class="transition duration-500"
-      enter-from-class="opacity-0 translate-y-3"
+      enter-active-class="transition duration-500 ease-out"
+      enter-from-class="opacity-0 translate-y-4 -rotate-1"
     >
-      <div v-if="solved" class="mt-8 rounded-2xl bg-plum-900 p-6 text-white md:p-8">
-        <p class="eyebrow mb-3 text-plum-300">Explication</p>
-        <p class="text-lg leading-relaxed text-plum-100">
+      <UiCard v-if="solved" tone="sun" padding="lg" class="mt-12 -rotate-[0.6deg]">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em]">
+          ✺ Explication
+        </p>
+        <p class="mt-4 max-w-3xl text-xl font-medium leading-snug md:text-2xl">
           Le terme « data science » a été inventé en
-          <strong class="text-white">1974</strong> par Peter Naur. Il l'a
+          <strong class="font-black">1974</strong> par Peter Naur. Il l'a
           utilisé pour la première fois dans son livre
           <em>Concise Survey of Computer Methods</em> pour décrire le traitement
           des données dans un large éventail d'applications.
         </p>
-      </div>
+      </UiCard>
     </Transition>
   </div>
 </template>

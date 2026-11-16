@@ -3,7 +3,7 @@ import type { IconName } from "./UiIcon.vue";
 
 const props = withDefaults(
   defineProps<{
-    variant?: "primary" | "secondary" | "ghost" | "dark";
+    variant?: "primary" | "secondary" | "dark" | "sun";
     size?: "sm" | "md" | "lg";
     /** Route interne */
     to?: string;
@@ -25,23 +25,22 @@ const props = withDefaults(
   }
 );
 
+// Bouton « tampon » : bordure d'encre et ombre pleine qui s'écrase au clic
 const variants = {
-  primary:
-    "bg-brand-500 text-white shadow-sm hover:bg-brand-600 active:bg-brand-700",
-  secondary:
-    "bg-white text-plum-900 ring-1 ring-inset ring-paper-300 hover:bg-paper-50 hover:ring-plum-300",
-  ghost: "text-plum-700 hover:bg-plum-100 hover:text-plum-900",
-  dark: "bg-plum-900 text-white hover:bg-plum-800",
+  primary: "bg-brand text-white shadow-hard",
+  secondary: "bg-paper-50 text-ink shadow-hard",
+  dark: "bg-ink text-paper shadow-hard-brand",
+  sun: "bg-sun text-ink shadow-hard",
 };
 
 const sizes = {
-  sm: "h-9 gap-1.5 px-3.5 text-sm",
-  md: "h-11 gap-2 px-5 text-[15px]",
-  lg: "h-14 gap-2.5 px-7 text-base",
+  sm: "h-10 gap-2 px-4 text-xs",
+  md: "h-12 gap-2.5 px-5 text-sm",
+  lg: "h-14 gap-3 px-7 text-base",
 };
 
 const classes = computed(() => [
-  "group inline-flex select-none items-center justify-center whitespace-nowrap rounded-full font-semibold transition-all duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
+  "group inline-flex select-none items-center justify-center whitespace-nowrap border-2 border-ink font-display font-extrabold uppercase tracking-wide font-semicondensed transition-[transform,box-shadow] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-1 active:translate-y-1 active:shadow-none disabled:pointer-events-none disabled:opacity-50",
   variants[props.variant],
   sizes[props.size],
 ]);

@@ -6,11 +6,11 @@ const props = defineProps<{ active?: boolean }>();
   <button
     type="button"
     :aria-pressed="props.active"
-    class="inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors duration-200"
+    class="inline-flex h-11 items-center gap-2 border-2 border-ink px-4 font-display text-sm font-extrabold uppercase tracking-wide font-semicondensed transition-all duration-150"
     :class="
       props.active
-        ? 'bg-plum-900 text-white'
-        : 'bg-white text-plum-700 ring-1 ring-inset ring-paper-300 hover:bg-paper-50 hover:ring-plum-300'
+        ? 'bg-ink text-paper shadow-hard-brand'
+        : 'bg-paper-50 text-ink hover:-translate-y-0.5 hover:bg-sun'
     "
   >
     <slot />

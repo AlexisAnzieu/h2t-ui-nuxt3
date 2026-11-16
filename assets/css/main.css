@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply bg-paper font-sans text-plum-900 antialiased;
+    @apply bg-paper font-sans text-ink antialiased;
     text-size-adjust: 100%;
   }
 
@@ -12,12 +12,29 @@
     @apply bg-paper;
   }
 
+  /* Grain papier façon risographie, sur tout le site */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.05 0 0 0 0 0.14 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   ::selection {
-    @apply bg-brand-500 text-white;
+    @apply bg-sun text-ink;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-paper;
+    outline: 3px solid theme(colors.ink);
+    outline-offset: 3px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: theme(colors.sun.DEFAULT);
   }
 
   iframe {
@@ -26,34 +43,62 @@
 }
 
 @layer components {
-  /* Liens dans le texte courant */
   .link {
-    @apply font-medium text-plum-900 underline decoration-brand-500 decoration-2 underline-offset-4 transition-colors hover:text-brand-600;
-  }
-
-  /* Titre de section secondaire */
-  .section-title {
-    @apply font-display text-2xl font-bold tracking-tight text-plum-900;
-  }
-
-  .eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.18em] text-plum-500;
+    @apply font-semibold underline decoration-brand decoration-[3px] underline-offset-4 transition-colors hover:bg-sun;
   }
 }
 
-/* Toasts (vue3-toastify) alignés sur la charte */
+@layer utilities {
+  /* Axe de largeur d'Archivo (62 → 125) */
+  .font-condensed {
+    font-stretch: 62%;
+  }
+  .font-semicondensed {
+    font-stretch: 82%;
+  }
+  .font-expanded {
+    font-stretch: 125%;
+  }
+
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px theme(colors.ink);
+  }
+
+  /* Décalage de calage entre deux encres */
+  .riso {
+    text-shadow: 0.045em 0.035em 0 rgb(227 25 61 / 0.85);
+  }
+  .riso-violet {
+    text-shadow: 0.045em 0.035em 0 rgb(75 42 99 / 0.9);
+  }
+
+  .hatch {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      currentColor 0 2px,
+      transparent 2px 11px
+    );
+  }
+}
+
+/* Toasts (vue3-toastify) */
 :root {
-  --toastify-color-light: #ffffff;
-  --toastify-text-color-light: #1a1128;
-  --toastify-color-success: #2f6b4f;
+  --toastify-color-light: #faf8f3;
+  --toastify-text-color-light: #170d24;
+  --toastify-color-success: #0f7a4a;
   --toastify-color-error: #e3193d;
-  --toastify-color-info: #4b3a66;
-  --toastify-font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --toastify-color-info: #4b2a63;
+  --toastify-font-family: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 .Toastify__toast {
-  border-radius: 14px;
-  box-shadow: 0 16px 32px -8px rgb(26 17 40 / 0.25);
+  border: 2px solid #170d24;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 0 #170d24;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.04em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -61,6 +106,7 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

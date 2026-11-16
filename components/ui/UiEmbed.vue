@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
- * Lecteur intégré (YouTube, SoundCloud, Spotify…) avec un fond de chargement
- * et un ratio stable pour éviter les sauts de mise en page.
+ * Lecteur intégré (YouTube, SoundCloud, Spotify…) encadré à l'encre,
+ * avec un ratio stable pour éviter les sauts de mise en page.
  */
 const props = withDefaults(
   defineProps<{
@@ -16,7 +16,7 @@ const props = withDefaults(
 
 <template>
   <div
-    class="relative w-full overflow-hidden rounded-xl bg-plum-100"
+    class="relative w-full border-2 border-ink bg-ink"
     :class="props.height === 'video' && 'aspect-video'"
     :style="props.height !== 'video' ? { height: `${props.height}px` } : undefined"
   >

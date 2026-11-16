@@ -12,24 +12,30 @@ export interface Book {
 
 export const bookThemes: Record<
   BookTheme,
-  { label: string; description: string; cover: string; accent: string }
+  { label: string; description: string; bg: string }
 > = {
   blue: {
     label: "Réflexion",
     description: "Philosophie, anthropologie et réflexion sociale",
-    cover: "bg-ocean-500",
-    accent: "bg-ocean-700",
+    bg: "bg-riso-blue",
   },
   green: {
     label: "Nature",
     description: "Nature, écologie et environnement",
-    cover: "bg-forest-500",
-    accent: "bg-forest-700",
+    bg: "bg-riso-green",
   },
   purple: {
     label: "Récits",
     description: "Romans historiques, sagas familiales et récits personnels",
-    cover: "bg-clay-500",
-    accent: "bg-clay-700",
+    bg: "bg-riso-orange",
   },
+};
+
+/** Petit hash stable pour varier les tranches sans aléatoire (SSR-safe) */
+export const hashString = (value: string) => {
+  let h = 0;
+  for (let i = 0; i < value.length; i++) {
+    h = (h * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return h;
 };

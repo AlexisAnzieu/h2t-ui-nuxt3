@@ -9,7 +9,8 @@ useSeoMeta({
 });
 
 type Session = {
-  date: string;
+  day: string;
+  month: string;
   year: number;
   title: string;
 } & (
@@ -23,7 +24,8 @@ const soundcloud = (track: string) =>
 
 const sessions: Session[] = [
   {
-    date: "30 oct.",
+    day: "30",
+    month: "oct.",
     year: 2021,
     title: "XX Halloween",
     type: "youtube",
@@ -35,60 +37,68 @@ const sessions: Session[] = [
     ],
   },
   {
-    date: "18 août",
+    day: "18",
+    month: "août",
     year: 2021,
     title: "Boiler Rhum",
     type: "youtube",
     videos: ["https://www.youtube.com/embed/o8SUW0flFCo"],
   },
   {
-    date: "29 juil.",
+    day: "29",
+    month: "juil.",
     year: 2021,
     title: "Jamjazz",
     type: "youtube",
     videos: ["https://www.youtube.com/embed/xWzacY1VKXE"],
   },
   {
-    date: "15 avr.",
+    day: "15",
+    month: "avr.",
     year: 2021,
     title: "SoundCrate X Jeremy",
     type: "youtube",
     videos: ["https://www.youtube.com/embed/qO4ipGwr7dQ"],
   },
   {
-    date: "19 févr.",
+    day: "19",
+    month: "févr.",
     year: 2020,
     title: "Live Jazz",
     type: "soundcloud",
     src: soundcloud("764061727"),
   },
   {
-    date: "8 janv.",
+    day: "08",
+    month: "janv.",
     year: 2020,
     title: "Dolc’Evita",
     type: "soundcloud",
     src: soundcloud("740572471"),
   },
   {
-    date: "18 déc.",
+    day: "18",
+    month: "déc.",
     year: 2019,
     title: "Christmas",
     type: "text",
     description:
-      "Cette session, une prestation vinyle live de 2 heures, n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
+      "Une prestation vinyle live de 2 heures, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
     email: "alexis@soundmotion.ca",
   },
   {
-    date: "6 nov.",
+    day: "06",
+    month: "nov.",
     year: 2019,
     title: "Rap session",
     type: "text",
     description:
-      "Cette session, une prestation rap live de 40 minutes, n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
+      "Une prestation rap live de 40 minutes, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
     email: "alexis@soundmotion.ca",
   },
   {
-    date: "9 oct.",
+    day: "09",
+    month: "oct.",
     year: 2019,
     title: "SoundCrate",
     type: "soundcloud",
@@ -104,21 +114,25 @@ const years = computed(() => {
   return [...groups.entries()];
 });
 
-const typeLabel = {
-  youtube: { label: "Vidéo", tone: "brand" },
-  soundcloud: { label: "Audio", tone: "plum" },
-  text: { label: "Non enregistrée", tone: "neutral" },
+const typeStyle = {
+  youtube: { label: "▶ Vidéo", tone: "brand", date: "bg-brand text-white" },
+  soundcloud: { label: "♫ Audio", tone: "violet", date: "on-dark bg-violet-900 text-paper" },
+  text: { label: "Non enregistrée", tone: "outline", date: "bg-paper-200 text-ink" },
 } as const;
 </script>
 
 <template>
   <div>
-    <UiPageHeader eyebrow=".boiler" title="Les sessions musicales">
+    <UiPageHeader
+      egg="boiler"
+      :lines="['Le son', 'du Plateau']"
+      :accent="1"
+    >
       Des soirées live récurrentes, du jazz au rap en passant par le vinyle.
-      Remonte le fil des sessions enregistrées depuis 2019.
+      Remonte le fil des sessions enregistrées.
     </UiPageHeader>
 
-    <div class="space-y-16">
+    <div class="space-y-20">
       <section
         v-for="[year, items] in years"
         :key="year"
@@ -126,69 +140,82 @@ const typeLabel = {
       >
         <h2
           :id="`year-${year}`"
-          class="mb-6 flex items-center gap-4 font-display text-5xl font-extrabold tracking-tight text-plum-200 md:text-6xl"
+          class="mb-8 font-display text-[clamp(6rem,18vw,13rem)] font-black leading-[0.75] tracking-tight font-condensed text-outline"
         >
           {{ year }}
-          <span class="h-px flex-1 bg-paper-300" aria-hidden="true" />
         </h2>
 
-        <ol class="space-y-6">
-          <li
-            v-for="session in items"
-            :key="session.title"
-            class="grid gap-3 md:grid-cols-[7rem_1fr] md:gap-8"
-          >
-            <div class="pt-1 font-mono text-sm text-plum-500 md:text-right">
-              {{ session.date }}
-            </div>
-
-            <UiCard as="article" padding="lg">
-              <div class="mb-5 flex flex-wrap items-center gap-3">
-                <h3 class="font-display text-2xl font-bold tracking-tight">
-                  {{ session.title }}
-                </h3>
-                <UiBadge :tone="typeLabel[session.type].tone">
-                  {{ typeLabel[session.type].label }}
-                </UiBadge>
-              </div>
-
+        <ol class="space-y-10">
+          <li v-for="session in items" :key="session.title">
+            <article
+              class="grid border-2 border-ink bg-paper-50 shadow-hard-lg md:grid-cols-[9.5rem_1fr]"
+            >
+              <!-- Date façon billet -->
               <div
-                v-if="session.type === 'youtube'"
-                class="grid gap-4"
-                :class="session.videos.length > 1 && 'md:grid-cols-2'"
+                class="flex items-baseline gap-3 border-b-2 border-ink p-4 md:flex-col md:items-start md:gap-1 md:border-b-0 md:border-r-2 md:p-5"
+                :class="typeStyle[session.type].date"
               >
-                <UiEmbed
-                  v-for="(video, i) in session.videos"
-                  :key="video"
-                  :src="video"
-                  :title="`${session.title} – vidéo ${i + 1}`"
-                />
-              </div>
-
-              <UiEmbed
-                v-else-if="session.type === 'soundcloud'"
-                :src="session.src"
-                :title="session.title"
-                :height="300"
-              />
-
-              <div
-                v-else
-                class="flex flex-col gap-4 rounded-xl bg-paper-100 p-5 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <p class="max-w-prose text-plum-600">
-                  {{ session.description }} Tu souhaites apporter ton aide ?
-                </p>
-                <UiButton
-                  :href="mailto(`Session ${session.title}`, session.email)"
-                  variant="secondary"
-                  size="sm"
-                  icon-left="mail"
+                <span
+                  class="font-display text-6xl font-black leading-[0.8] font-condensed md:text-[6.5rem]"
+                  >{{ session.day }}</span
                 >
-                  Écris-moi
-                </UiButton>
+                <span class="font-mono text-sm font-semibold uppercase tracking-wider">
+                  {{ session.month }} {{ session.year }}
+                </span>
               </div>
-            </UiCard>
+
+              <div class="min-w-0 p-5 md:p-7">
+                <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                  <h3
+                    class="font-display text-4xl font-black uppercase leading-[0.88] font-condensed md:text-6xl"
+                  >
+                    {{ session.title }}
+                  </h3>
+                  <UiBadge :tone="typeStyle[session.type].tone">
+                    {{ typeStyle[session.type].label }}
+                  </UiBadge>
+                </div>
+
+                <div
+                  v-if="session.type === 'youtube'"
+                  class="grid gap-4"
+                  :class="session.videos.length > 1 && 'md:grid-cols-2'"
+                >
+                  <UiEmbed
+                    v-for="(video, i) in session.videos"
+                    :key="video"
+                    :src="video"
+                    :title="`${session.title} – vidéo ${i + 1}`"
+                  />
+                </div>
+
+                <UiEmbed
+                  v-else-if="session.type === 'soundcloud'"
+                  :src="session.src"
+                  :title="session.title"
+                  :height="300"
+                />
+
+                <div
+                  v-else
+                  class="relative overflow-hidden border-2 border-dashed border-ink p-5 md:p-6"
+                >
+                  <div class="hatch absolute inset-0 text-ink/[0.06]" aria-hidden="true" />
+                  <p class="relative max-w-prose text-lg font-medium">
+                    {{ session.description }}
+                    <span class="font-bold">Tu souhaites apporter ton aide ?</span>
+                  </p>
+                  <UiButton
+                    :href="mailto(`Session ${session.title}`, session.email)"
+                    variant="sun"
+                    size="sm"
+                    class="relative mt-5"
+                  >
+                    Je peux aider
+                  </UiButton>
+                </div>
+              </div>
+            </article>
           </li>
         </ol>
       </section>

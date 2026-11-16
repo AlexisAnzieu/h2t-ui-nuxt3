@@ -1,21 +1,37 @@
+<script setup lang="ts">
+/** Reprise du logo H2T.club : H/2/T empilés dans un cadre violet. */
+const props = withDefaults(defineProps<{ size?: "sm" | "md" }>(), {
+  size: "md",
+});
+</script>
+
 <template>
   <NuxtLink
     to="/"
-    class="group inline-flex items-center gap-3"
+    class="group inline-flex items-end gap-2.5 text-white"
     aria-label="H2T.club, retour à l'accueil"
   >
     <span
-      class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500 transition-transform duration-300 group-hover:-rotate-6"
+      class="flex flex-col items-center border-violet-700 font-display font-semibold leading-[0.92] transition-transform duration-300 group-hover:-rotate-3"
+      :class="
+        props.size === 'md'
+          ? 'border-[3px] px-1.5 py-1 text-[26px]'
+          : 'border-2 px-1 py-0.5 text-[15px]'
+      "
       aria-hidden="true"
     >
-      <span
-        class="flex h-7 w-4 flex-col items-center justify-center border-[1.5px] border-plum-700 font-display text-[9px] font-bold leading-[1.05] text-white"
-      >
-        <span>H</span><span>2</span><span>T</span>
-      </span>
+      <span>H</span><span>2</span><span>T</span>
     </span>
-    <span class="font-display text-xl font-extrabold tracking-tight text-white">
-      H2T<span class="text-brand-400">.club</span>
+    <span class="flex flex-col items-end" aria-hidden="true">
+      <span
+        class="font-display font-black uppercase leading-none font-expanded"
+        :class="props.size === 'md' ? 'text-2xl' : 'text-base'"
+        >.club</span
+      >
+      <span
+        class="mt-1.5 block bg-violet-700"
+        :class="props.size === 'md' ? 'h-[3px] w-10' : 'h-0.5 w-6'"
+      />
     </span>
   </NuxtLink>
 </template>

@@ -5,33 +5,59 @@ const { openDoor, pending } = useOpenDoor();
 </script>
 
 <template>
-  <div class="grid min-h-[70dvh] place-items-center">
+  <div class="grid min-h-[75dvh] place-items-center py-10">
     <div class="flex flex-col items-center text-center">
-      <p class="eyebrow mb-10">.partage-club</p>
+      <p
+        class="mb-10 border-2 border-ink bg-paper-50 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-[0.18em]"
+      >
+        .partage-club ✺ Accès membres
+      </p>
 
       <button
         type="button"
-        class="group relative grid h-64 w-64 place-items-center rounded-full bg-brand-500 text-white shadow-[0_24px_60px_-12px_rgb(227_25_61/0.55)] transition-all duration-300 hover:scale-[1.03] hover:bg-brand-600 active:scale-95 disabled:cursor-wait md:h-72 md:w-72"
+        class="group relative grid size-[19rem] place-items-center disabled:cursor-wait md:size-[26rem]"
         :disabled="pending"
         :aria-busy="pending"
+        aria-label="Ouvrir la porte"
         @click="openDoor"
       >
-        <span
-          class="absolute inset-0 rounded-full ring-2 ring-brand-500/40"
-          :class="pending ? 'animate-ping' : 'animate-pulse-ring'"
+        <!-- Texte qui tourne autour -->
+        <svg
+          class="absolute inset-0 h-full w-full animate-spin-slow"
+          :class="pending && '[animation-duration:3s]'"
+          viewBox="0 0 200 200"
           aria-hidden="true"
-        />
-        <span class="flex flex-col items-center gap-3">
-          <UiIcon name="door" :size="56" />
-          <span class="font-display text-4xl font-extrabold tracking-tight">
-            {{ pending ? "Ouverture…" : "Ouvrir" }}
+        >
+          <defs>
+            <path
+              id="door-ring"
+              d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"
+            />
+          </defs>
+          <text
+            class="fill-ink font-mono text-[10.5px] font-semibold uppercase tracking-[0.25em]"
+          >
+            <textPath href="#door-ring" textLength="548" lengthAdjust="spacing">
+              Ouvrir la porte ✺ Ouvrir la porte ✺ Ouvrir la porte ✺
+            </textPath>
+          </text>
+        </svg>
+
+        <span
+          class="grid size-[13.5rem] place-items-center rounded-full border-2 border-ink bg-brand text-white shadow-hard-lg transition-[transform,box-shadow] duration-150 group-hover:-translate-x-1 group-hover:-translate-y-1 group-active:translate-x-1 group-active:translate-y-1 group-active:shadow-none md:size-[19rem]"
+        >
+          <span class="flex flex-col items-center">
+            <span
+              class="font-display text-7xl font-black uppercase leading-[0.8] font-condensed riso-violet md:text-8xl"
+            >
+              {{ pending ? "…" : "Porte" }}
+            </span>
+            <span class="mt-3 font-mono text-xs font-semibold uppercase tracking-[0.2em]">
+              {{ pending ? "Ouverture" : "Appuie ici" }}
+            </span>
           </span>
         </span>
       </button>
-
-      <p class="mt-10 max-w-xs text-plum-500">
-        Appuie sur le bouton pour déverrouiller la porte du club.
-      </p>
     </div>
   </div>
 </template>

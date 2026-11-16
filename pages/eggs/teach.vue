@@ -23,48 +23,52 @@ const joinLink = mailto(
 
 <template>
   <div>
-    <UiPageHeader eyebrow=".teach" title="Apprendre les uns des autres.">
-      Chaque membre a un savoir à partager. Les ateliers .teach rendent ces
+    <UiPageHeader
+      egg="teach"
+      :lines="['Apprendre', 'les uns', 'des autres']"
+      :accent="2"
+    >
+      Chaque membre a un savoir à partager. Les ateliers rendent ces
       connaissances accessibles à toute la communauté.
     </UiPageHeader>
 
-    <UiCard as="article" padding="none" class="grid lg:grid-cols-[1.1fr_1fr]">
-      <div class="p-6 md:p-10">
-        <UiBadge tone="forest">Atelier</UiBadge>
+    <UiCard as="article" tone="sun" padding="none" class="grid lg:grid-cols-[1fr_1.1fr]">
+      <div class="flex flex-col p-6 md:p-10">
+        <UiBadge tone="ink">Finances personnelles</UiBadge>
         <h2
-          class="mt-4 text-balance font-display text-3xl font-bold tracking-tight md:text-4xl"
+          class="mt-6 font-display text-[clamp(2.75rem,4.6vw,4.5rem)] font-black uppercase leading-[0.9] font-condensed"
         >
-          Bonnes pratiques de finances personnelles
+          Bonnes pratiques
+          <span class="text-brand riso-violet">de finances perso</span>
         </h2>
-        <p class="mt-4 max-w-prose text-lg leading-relaxed text-plum-600">
+        <p class="mt-6 max-w-md text-lg font-medium leading-snug">
           Démystifier le monde de l'investissement afin d'atteindre
           l'indépendance financière, en quelques étapes.
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <UiButton href="/assets/Investissement.pdf" new-tab icon-left="download">
-            Voir la présentation
+        <div class="mt-auto flex flex-wrap gap-4 pt-10">
+          <UiButton href="/assets/Investissement.pdf" new-tab variant="dark" icon-left="download">
+            La présentation
           </UiButton>
-          <UiButton
-            :href="joinLink"
-            variant="secondary"
-          >
-            Participer au prochain
-          </UiButton>
+          <UiButton :href="joinLink" variant="secondary">Participer</UiButton>
         </div>
       </div>
 
-      <div class="border-t border-paper-200 bg-paper-100 p-6 md:p-10 lg:border-l lg:border-t-0">
-        <p class="eyebrow mb-5">Au programme</p>
-        <ol class="space-y-1">
+      <div class="border-ink bg-paper-50 p-6 max-lg:border-t-2 md:p-10 lg:border-l-2">
+        <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em]">
+          ✺ Au programme
+        </p>
+        <ol class="mt-4">
           <li
             v-for="(topic, i) in topics"
             :key="topic"
-            class="flex items-baseline gap-4 border-b border-paper-200 py-3 last:border-0"
+            class="group flex items-baseline gap-5 border-b-2 border-ink py-3.5 transition-colors last:border-0 hover:bg-sun"
           >
-            <span class="font-mono text-sm text-brand-500">
+            <span
+              class="w-12 shrink-0 font-display text-5xl font-black leading-none text-brand font-condensed transition-transform group-hover:-rotate-6"
+            >
               {{ String(i + 1).padStart(2, "0") }}
             </span>
-            <span class="font-medium text-plum-800">{{ topic }}</span>
+            <span class="text-xl font-semibold leading-tight">{{ topic }}</span>
           </li>
         </ol>
       </div>

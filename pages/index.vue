@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { eggs, mailto, CONTACT_EMAIL, SOURCE_URL } from "~/data/navigation";
+import type { DuotoneTone } from "~/components/ui/UiDuotone.vue";
 
 useSeoMeta({
   title: "Accueil",
@@ -8,192 +9,132 @@ useSeoMeta({
     "Un réseau de relations bienveillantes autour de projets communs locaux : écologie, débats, radio, musique.",
 });
 
-const meanings = [
-  {
-    code: "H2T",
-    title: "Plateau-Mont-Royal",
-    text: "Le code postal du quartier, pour un projet résolument local.",
-  },
-  {
-    code: "H2T",
-    title: "House 2 Techno",
-    text: "Le fil musical qui a lancé les premières sessions.",
-  },
-  {
-    code: "H2T",
-    title: "Head 2 Toe",
-    text: "De la tête aux pieds : une approche thématique et complète.",
-  },
-];
+const tones: DuotoneTone[] = ["red", "violet", "sun", "blue", "red", "violet"];
+const questionLink = mailto("Je souhaite poser une question sur H2T");
 </script>
 
 <template>
   <div>
-    <!-- Hero -->
-    <section class="relative mb-16 md:mb-24">
-      <p class="eyebrow mb-6 flex items-center gap-3">
-        <span class="h-px w-8 bg-brand-500" aria-hidden="true" />
-        Plateforme intra-communautaire locale
-      </p>
-      <h1
-        class="max-w-4xl text-balance font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-plum-900 sm:text-6xl md:text-7xl xl:text-8xl"
-      >
-        Bienvenue sur <span class="text-brand-500">H2T</span>.
-      </h1>
-      <p
-        class="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-plum-600 md:text-xl"
-      >
-        Un réseau de relations bienveillantes, tissé à travers des projets
-        communs locaux : écologie, débats, radio, musique. Autrement dit, un
-        forum de partage de biens, de services et d'idées dans un cercle
-        restreint.
-      </p>
-      <div class="mt-10 flex flex-wrap gap-3">
+    <UiPageHeader
+      egg="accueil"
+      :lines="['Bienvenue', 'sur H2T.']"
+      :accent="1"
+    >
+      Un réseau de relations bienveillantes, tissé à travers des projets communs
+      locaux. Un forum de partage de biens, de services et d'idées, dans un
+      cercle restreint.
+      <template #actions>
         <UiButton to="/eggs/boiler" icon="arrow-right" size="lg">
-          Découvrir les projets
+          Explorer les projets
         </UiButton>
-        <UiButton
-          :href="mailto('Je souhaite poser une question sur H2T')"
-          variant="secondary"
-          icon-left="mail"
-          size="lg"
-        >
+        <UiButton :href="questionLink" variant="secondary" size="lg">
           Nous écrire
         </UiButton>
-      </div>
-    </section>
+      </template>
+    </UiPageHeader>
 
-    <!-- Signification -->
-    <section class="mb-16 md:mb-24" aria-labelledby="meaning-title">
-      <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
-        <h2 id="meaning-title" class="section-title">Que signifie H2T ?</h2>
-        <p class="max-w-md text-plum-600">
-          Le sens n'est pas figé : il varie au gré des projets et du vent. À toi
-          de le définir. À sa création, il portait trois idées.
-        </p>
-      </div>
-      <div class="grid gap-4 md:grid-cols-3">
-        <UiCard v-for="(m, i) in meanings" :key="m.title" padding="lg">
-          <div class="mb-10 flex items-start justify-between">
-            <span class="font-mono text-sm text-plum-400">0{{ i + 1 }}</span>
-            <span
-              class="font-display text-sm font-bold tracking-tight text-brand-500"
-              >{{ m.code }}</span
-            >
-          </div>
-          <h3 class="font-display text-2xl font-bold tracking-tight">
-            {{ m.title }}
-          </h3>
-          <p class="mt-2 text-plum-600">{{ m.text }}</p>
-        </UiCard>
-      </div>
-    </section>
-
-    <!-- Explorer -->
-    <section class="mb-16 md:mb-24" aria-labelledby="eggs-title">
-      <div class="mb-8">
-        <h2 id="eggs-title" class="section-title">Les œufs</h2>
-        <p class="mt-2 text-plum-600">
+    <!-- Les œufs -->
+    <section class="mb-24 mt-20 md:mb-32 md:mt-28" aria-labelledby="eggs-title">
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <h2
+          id="eggs-title"
+          class="font-display text-[clamp(3.5rem,9vw,7.5rem)] font-black uppercase leading-[0.82] font-condensed riso"
+        >
+          Les œufs
+        </h2>
+        <p class="max-w-xs text-lg font-medium">
           Chaque projet de la communauté éclot dans son propre espace.
         </p>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+
+      <div class="grid gap-5 md:grid-cols-3 md:gap-6">
         <NuxtLink
-          v-for="egg in eggs"
+          v-for="(egg, i) in eggs"
           :key="egg.label"
           :to="egg.to ?? egg.href"
           :target="egg.href ? '_blank' : undefined"
-          class="group relative isolate flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-2xl p-6 shadow-card"
+          class="group relative block aspect-[4/3] border-2 border-ink shadow-hard-lg transition-[transform,box-shadow] duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0_0_#170D24] md:aspect-auto md:min-h-[15rem]"
+          :class="i === 0 && 'md:col-span-2 md:row-span-2'"
         >
-          <img
-            :src="egg.image"
-            alt=""
-            loading="lazy"
-            class="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
+          <UiDuotone :src="egg.image" :tone="tones[i]" reveal />
           <div
-            class="absolute inset-0 -z-10 bg-gradient-to-t from-plum-950/90 via-plum-950/40 to-transparent"
+            class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent"
             aria-hidden="true"
           />
-          <div class="flex items-end justify-between gap-3 text-white">
-            <div>
-              <div class="font-display text-3xl font-bold tracking-tight">
-                <span class="text-brand-400">.</span>{{ egg.label }}
-              </div>
-              <div class="mt-1 font-mono text-xs text-white/70">
-                {{ egg.caption }}
-              </div>
-            </div>
+          <span
+            class="absolute left-3 top-3 border-2 border-ink bg-paper-50 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider"
+          >
+            N°{{ egg.number }} ✺ {{ egg.caption }}
+          </span>
+          <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 text-white md:p-5">
             <span
-              class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/15 backdrop-blur transition-all duration-300 group-hover:bg-brand-500"
+              class="min-w-0 font-display font-black uppercase leading-[0.82] font-condensed"
+              :class="i === 0 ? 'text-6xl md:text-[8.5rem]' : 'text-5xl'"
+              >.{{ egg.label }}</span
             >
-              <UiIcon
-                :name="egg.href ? 'arrow-up-right' : 'arrow-right'"
-                :size="18"
-              />
+            <span
+              class="grid h-11 w-11 shrink-0 place-items-center border-2 border-ink bg-sun text-ink transition-transform duration-300 group-hover:-rotate-12"
+            >
+              <UiIcon :name="egg.href ? 'arrow-up-right' : 'arrow-right'" :size="20" />
             </span>
           </div>
         </NuxtLink>
       </div>
     </section>
 
-    <!-- Pourquoi pas Facebook -->
-    <section
-      class="mb-16 grid gap-10 rounded-3xl bg-plum-900 p-8 text-white md:mb-24 md:grid-cols-[1fr_1.4fr] md:p-12"
-      aria-labelledby="why-title"
-    >
-      <div>
-        <p class="eyebrow mb-4 text-plum-300">FAQ</p>
+    <!-- Manifeste -->
+    <section class="relative mb-24 md:mb-32" aria-labelledby="why-title">
+      <UiCard tone="violet" padding="lg">
         <h2
           id="why-title"
-          class="text-balance font-display text-3xl font-bold tracking-tight md:text-4xl"
+          class="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-sun"
         >
-          Pourquoi ne pas créer un groupe Facebook ?
+          Pourquoi pas un groupe Facebook ?
         </h2>
-      </div>
-      <div class="space-y-4 text-lg leading-relaxed text-plum-200">
-        <p>
-          Pour l'<strong class="font-semibold text-white">indépendance</strong>
-          de la plateforme et de ses usagers. Ici, les données ne sont pas
-          vendues : l'hébergement coûte 100 $ par an, nul besoin de stratégie
-          publicitaire.
+        <p
+          class="mt-6 max-w-4xl font-display text-[clamp(2.75rem,7vw,6rem)] font-black uppercase leading-none font-condensed"
+        >
+          Ici, tes données <span class="text-sun">ne sont pas à vendre.</span>
         </p>
-        <p>
-          Et parce que le code source est
-          <a
-            :href="SOURCE_URL"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-white underline decoration-brand-500 decoration-2 underline-offset-4 hover:text-brand-200"
-            >entièrement disponible en ligne</a
-          >, de nouvelles fonctionnalités peuvent naître selon les besoins de la
-          communauté. Ce qui n'est pas le cas avec Facebook.
-        </p>
-      </div>
+        <div class="mt-10 grid gap-6 text-lg leading-relaxed text-paper/90 md:grid-cols-2">
+          <p>
+            La plateforme et ses usagers restent indépendants. L'hébergement coûte
+            100 $ par an : nul besoin d'élaborer une stratégie publicitaire.
+          </p>
+          <p>
+            Le code source est
+            <a
+              :href="SOURCE_URL"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-sun underline decoration-2 underline-offset-4 hover:bg-sun hover:text-ink"
+              >entièrement disponible en ligne</a
+            >. De nouvelles fonctionnalités peuvent naître selon les besoins de la
+            communauté. Ce qui n'est pas le cas avec Facebook.
+          </p>
+        </div>
+      </UiCard>
     </section>
 
     <!-- Contact -->
-    <section
-      class="flex flex-col items-start justify-between gap-6 border-t border-paper-300 pt-10 md:flex-row md:items-center"
-    >
-      <div class="max-w-xl">
-        <h2 class="section-title">Une question persiste ?</h2>
-        <p class="mt-2 text-plum-600">
-          Écris à
-          <a :href="mailto('Je souhaite poser une question sur H2T')" class="link">{{
-            CONTACT_EMAIL
-          }}</a
-          >. Une réponse te sera envoyée, et si elle complète celles ci-dessus,
-          elle sera ajoutée à la page.
-        </p>
-      </div>
-      <UiButton
-        :href="mailto('Je souhaite poser une question sur H2T')"
-        variant="dark"
-        icon="arrow-right"
+    <section aria-labelledby="contact-title">
+      <h2
+        id="contact-title"
+        class="font-mono text-xs font-semibold uppercase tracking-[0.18em]"
       >
-        Poser ma question
-      </UiButton>
+        ✺ Une question persiste ?
+      </h2>
+      <a
+        :href="questionLink"
+        class="group mt-4 inline-block font-display text-[clamp(2.6rem,8vw,7rem)] font-black uppercase leading-[0.85] font-condensed transition-colors hover:text-brand"
+      >
+        {{ CONTACT_EMAIL }}
+        <span class="inline-block transition-transform duration-300 group-hover:translate-x-3">→</span>
+      </a>
+      <p class="mt-5 max-w-xl text-lg font-medium">
+        Une réponse te sera envoyée. Et si la question complète celles
+        ci-dessus, elle sera ajoutée à la page.
+      </p>
     </section>
   </div>
 </template>
