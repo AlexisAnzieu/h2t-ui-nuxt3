@@ -17,8 +17,16 @@ const themeKeys = Object.keys(bookThemes) as BookTheme[];
 const countFor = (key: BookTheme) =>
   books.value.filter((b) => b.color === key).length;
 
-const shelf = computed(() =>
-  filter.value ? books.value.filter((b) => b.color === filter.value) : books.value
+// Une pile par thématique (le filtre n'en garde qu'une)
+const piles = computed(() =>
+  themeKeys
+    .filter((key) => !filter.value || filter.value === key)
+    .map((key) => ({
+      key,
+      theme: bookThemes[key],
+      books: books.value.filter((b) => b.color === key),
+    }))
+    .filter((pile) => pile.books.length)
 );
 
 // Livre sorti de l'étagère, affiché dans la modale
@@ -39,7 +47,7 @@ const select = (book: Book) => {
       :accent="1"
     >
       Les lectures qui ont marqué la communauté, à offrir ou à s'offrir.
-      Tire un livre de l'étagère pour lire sa quatrième de couverture.
+      Tire un livre d'une pile pour lire sa quatrième de couverture.
     </UiPageHeader>
 
     <div class="mb-12 flex flex-wrap gap-3" role="group" aria-label="Filtrer par thématique">
@@ -65,14 +73,34 @@ const select = (book: Book) => {
       class="h-72 animate-pulse border-b-[12px] border-ink bg-paper-200"
       aria-busy="true"
     />
-    <div v-else class="flex flex-wrap items-end gap-y-12 pt-8">
-      <ThequeSpine
-        v-for="book in shelf"
-        :key="book.title"
-        :book="book"
-        :selected="isOpen && book.title === selected?.title"
-        @select="select(book)"
-      />
+    <div
+      v-else
+      class="grid items-end gap-x-10 gap-y-16"
+      :class="piles.length > 1 ? 'md:grid-cols-2 xl:grid-cols-3' : 'max-w-xl'"
+    >
+      <section
+        v-for="pile in piles"
+        :key="pile.key"
+        :aria-label="`Pile ${pile.theme.label}`"
+      >
+        <div class="flex flex-col-reverse gap-1.5 pr-6">
+          <ThequeSpine
+            v-for="book in pile.books"
+            :key="book.title"
+            :book="book"
+            :selected="isOpen && book.title === selected?.title"
+            @select="select(book)"
+          />
+        </div>
+        <!-- Socle -->
+        <div class="mt-1.5 h-3 bg-ink" aria-hidden="true" />
+        <p
+          class="mt-3 flex items-center justify-between font-mono text-xs font-semibold uppercase tracking-[0.16em]"
+        >
+          <span>{{ pile.theme.label }}</span>
+          <span class="opacity-60">{{ pile.books.length }} livres</span>
+        </p>
+      </section>
     </div>
 
     <!-- Livre sorti -->

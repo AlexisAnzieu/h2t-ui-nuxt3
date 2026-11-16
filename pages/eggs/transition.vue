@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { mailto } from "~/data/navigation";
-
 useSeoMeta({
   title: "Transition",
   ogTitle: "H2T.transition",
@@ -13,8 +11,6 @@ interface Initiative {
   description: string;
   link: string;
   linkLabel: string;
-  /** Sujet du mail pour participer via H2T */
-  contact?: string;
 }
 
 const initiatives: Initiative[] = [
@@ -25,7 +21,6 @@ const initiatives: Initiative[] = [
       "Nous hébergeons des ateliers de la Fresque du Climat. Depuis fin 2018, l'association œuvre pour embarquer individus et organisations dans la transition, en diffusant une compréhension partagée du défi climatique, en France et dans plus de 40 pays. Le nombre de personnes sensibilisées double tous les 5 mois.",
     link: "https://fresqueduclimat.org/",
     linkLabel: "En savoir plus",
-    contact: "Je souhaite participer à la Fresque du Climat",
   },
   {
     title: "Les Primitifs",
@@ -34,7 +29,6 @@ const initiatives: Initiative[] = [
       "Certains membres participent activement à ces formations. Depuis 2007, Les Primitifs vont au-delà du cours de survie : remplacer la peur et les mythes par des connaissances, des traditions et une curiosité contagieuse. Les tarifs sont maintenus au plus bas, l'objectif étant la diffusion.",
     link: "https://www.lesprimitifs.ca/nos-formations",
     linkLabel: "En savoir plus",
-    contact: "Je souhaite participer à une formation Les Primitifs",
   },
   {
     title: "Documentaires",
@@ -116,24 +110,16 @@ const tilts = ["-rotate-[1.5deg]", "rotate-[1.2deg]", "rotate-[-0.8deg]", "rotat
         <p class="mt-4 text-[17px] font-medium leading-snug opacity-90">
           {{ item.description }}
         </p>
-        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <UiButton
-            :href="item.link"
-            new-tab
-            :variant="papers[i % papers.length].button"
-            size="sm"
-            icon="arrow-up-right"
-          >
-            {{ item.linkLabel }}
-          </UiButton>
-          <a
-            v-if="item.contact"
-            :href="mailto(item.contact)"
-            class="font-mono text-xs font-semibold uppercase tracking-wider underline decoration-2 underline-offset-4 hover:opacity-70"
-          >
-            Participer avec H2T
-          </a>
-        </div>
+        <UiButton
+          :href="item.link"
+          new-tab
+          :variant="papers[i % papers.length].button"
+          size="sm"
+          icon="arrow-up-right"
+          class="mt-6"
+        >
+          {{ item.linkLabel }}
+        </UiButton>
       </article>
     </div>
   </div>

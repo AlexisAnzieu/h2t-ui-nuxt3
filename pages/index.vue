@@ -131,10 +131,6 @@ const questionLink = mailto("Je souhaite poser une question sur H2T");
         {{ CONTACT_EMAIL }}
         <span class="inline-block transition-transform duration-300 group-hover:translate-x-3">→</span>
       </a>
-      <p class="mt-5 max-w-xl text-lg font-medium">
-        Une réponse te sera envoyée. Et si la question complète celles
-        ci-dessus, elle sera ajoutée à la page.
-      </p>
     </section>
   </div>
 </template>
