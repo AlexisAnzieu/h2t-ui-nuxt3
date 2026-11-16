@@ -59,26 +59,13 @@ export default {
         "hard-brand": "4px 4px 0 0 #E3193D",
       },
       keyframes: {
-        shake: {
-          "0%, 100%": { transform: "translateX(0)" },
-          "20%, 60%": { transform: "translateX(-8px)" },
-          "40%, 80%": { transform: "translateX(8px)" },
-        },
         pop: {
           "0%": { transform: "translateY(24px) rotate(1.5deg)", opacity: "0" },
           "100%": { transform: "translateY(0) rotate(0)", opacity: "1" },
         },
-        stamp: {
-          "0%": { transform: "scale(2.2) rotate(-14deg)", opacity: "0" },
-          "60%": { transform: "scale(0.92) rotate(-10deg)", opacity: "1" },
-          "100%": { transform: "scale(1) rotate(-10deg)", opacity: "1" },
-        },
       },
       animation: {
         pop: "pop 0.3s cubic-bezier(.2,.9,.3,1.15) both",
-        shake: "shake 0.45s ease-in-out",
-        stamp: "stamp 0.45s cubic-bezier(.2,.9,.3,1.2) both",
-        "spin-slow": "spin 22s linear infinite",
       },
     },
   },
