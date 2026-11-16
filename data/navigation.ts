@@ -71,7 +71,7 @@ export const findNavItem = (label: string) =>
   navigation.find((item) => item.label === label);
 
 export const CONTACT_EMAIL = "contact@h2t.club";
-export const SOURCE_URL = "https://github.com/AlexisAnzieu/h2t-ui";
+export const SOURCE_URL = "https://github.com/AlexisAnzieu/h2t-ui-nuxt3";
 
 export const mailto = (subject: string, email = CONTACT_EMAIL) =>
   `mailto:${email}?subject=${encodeURIComponent(subject)}`;

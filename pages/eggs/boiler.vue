@@ -16,7 +16,7 @@ type Session = {
 } & (
   | { type: "youtube"; videos: string[] }
   | { type: "soundcloud"; src: string }
-  | { type: "text"; description: string; email: string }
+  | { type: "text"; description: string }
 );
 
 const soundcloud = (track: string) =>
@@ -84,7 +84,6 @@ const sessions: Session[] = [
     type: "text",
     description:
       "Une prestation vinyle live de 2 heures, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
-    email: "alexis@soundmotion.ca",
   },
   {
     day: "06",
@@ -94,7 +93,6 @@ const sessions: Session[] = [
     type: "text",
     description:
       "Une prestation rap live de 40 minutes, qui n'a malheureusement pas pu être enregistrée faute de moyens techniques.",
-    email: "alexis@soundmotion.ca",
   },
   {
     day: "09",
@@ -206,7 +204,7 @@ const typeStyle = {
                     <span class="font-bold">Tu souhaites apporter ton aide ?</span>
                   </p>
                   <UiButton
-                    :href="mailto(`Session ${session.title}`, session.email)"
+                    :href="mailto(`Session ${session.title}`)"
                     variant="sun"
                     size="sm"
                     class="relative mt-5"

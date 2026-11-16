@@ -82,25 +82,6 @@
   }
 }
 
-/* Toasts (vue3-toastify) */
-:root {
-  --toastify-color-light: #faf8f3;
-  --toastify-text-color-light: #170d24;
-  --toastify-color-success: #0f7a4a;
-  --toastify-color-error: #e3193d;
-  --toastify-color-info: #4b2a63;
-  --toastify-font-family: "IBM Plex Mono", ui-monospace, monospace;
-}
-
-.Toastify__toast {
-  border: 2px solid #170d24;
-  border-radius: 0;
-  box-shadow: 6px 6px 0 0 #170d24;
-  text-transform: uppercase;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
