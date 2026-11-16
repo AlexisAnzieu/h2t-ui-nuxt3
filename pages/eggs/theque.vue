@@ -1,106 +1,96 @@
-<template>
-  <div
-    class="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4"
-  >
-    <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold">H2tèque</h1>
-      <h2 class="text-2xl text-gray-600">
-        🎄 Cadeaux à glisser sous le sapin 🎄
-      </h2>
-    </div>
-    <div class="mb-8">
-      <label
-        for="colorFilter"
-        class="text-lg font-medium text-gray-700 mb-2 mr-4"
-        >Filtrer par thématique:</label
-      >
-      <div class="relative inline-block w-full md:w-1/2 lg:w-1/3">
-        <select
-          id="colorFilter"
-          v-model="selectedColor"
-          class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        >
-          <option value="">Tout</option>
-          <option value="blue">
-            Livres philosophiques, anthropologiques et de réflexion sociale
-          </option>
-          <option value="green">
-            Livres liés à la nature, l'écologie et l'environnement
-          </option>
-          <option value="purple">
-            Romans historiques, sagas familiales et récits personnels
-          </option>
-        </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-        >
-          <svg
-            class="fill-current h-4 w-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M7 10l5 5 5-5H7z" />
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
-      <div v-for="book in filteredBooks" :key="book.title">
-        <Book
-          :color="book.color"
-          :title="book.title"
-          :author="book.author"
-          :summary="book.summary"
-          :link="book.link"
-          :tags="book.tags"
-        />
-      </div>
-    </div>
-  </div>
-</template>
+<script setup lang="ts">
+import { bookThemes, type Book, type BookTheme } from "~/data/bookThemes";
 
-<script setup>
-import { ref, computed, onMounted } from "vue";
-import Book from "~/components/Book.vue";
-
-const books = ref([]);
-const selectedColor = ref("");
-
-const fetchBooks = async () => {
-  try {
-    const response = await fetch("/api/books");
-    books.value = await response.json();
-  } catch (error) {
-    console.error("Error fetching books:", error);
-  }
-};
-
-onMounted(() => {
-  fetchBooks();
+useSeoMeta({
+  title: "Thèque",
+  ogTitle: "H2T.theque",
+  description: "La bibliothèque partagée de la communauté H2T",
 });
 
-const filteredBooks = computed(() => {
-  if (!selectedColor.value) {
-    return books.value;
-  }
-  return books.value.filter((book) => book.color === selectedColor.value);
+const { data: books, status } = await useFetch<Book[]>("/api/books", {
+  default: () => [],
 });
+
+const selected = ref<BookTheme | "">("");
+
+const themeKeys = Object.keys(bookThemes) as BookTheme[];
+
+const countFor = (key: BookTheme) =>
+  books.value.filter((b) => b.color === key).length;
+
+const filteredBooks = computed(() =>
+  selected.value
+    ? books.value.filter((b) => b.color === selected.value)
+    : books.value
+);
 </script>
 
-<style scoped>
-.perspective-1000 {
-  perspective: 1000px;
-}
+<template>
+  <div>
+    <UiPageHeader eyebrow=".theque" title="Des livres à glisser sous le sapin.">
+      Les lectures qui ont marqué la communauté, à offrir ou à s'offrir.
+      Survole ou touche une couverture pour découvrir le résumé.
+    </UiPageHeader>
 
-.transform-style-3d {
-  transform-style: preserve-3d;
-}
+    <div
+      class="mb-10 flex flex-wrap gap-2"
+      role="group"
+      aria-label="Filtrer par thématique"
+    >
+      <UiChip :active="selected === ''" @click="selected = ''">
+        Tout
+        <span class="font-mono text-xs opacity-60">{{ books.length }}</span>
+      </UiChip>
+      <UiChip
+        v-for="key in themeKeys"
+        :key="key"
+        :active="selected === key"
+        :title="bookThemes[key].description"
+        @click="selected = key"
+      >
+        <span
+          class="h-2.5 w-2.5 rounded-full"
+          :class="bookThemes[key].cover"
+          aria-hidden="true"
+        />
+        {{ bookThemes[key].label }}
+        <span class="font-mono text-xs opacity-60">{{ countFor(key) }}</span>
+      </UiChip>
+    </div>
 
-.backface-hidden {
-  backface-visibility: hidden;
-}
+    <p v-if="selected" class="-mt-6 mb-10 text-sm text-plum-500">
+      {{ bookThemes[selected].description }}
+    </p>
 
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-</style>
+    <div
+      v-if="status === 'pending'"
+      class="grid gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3"
+      aria-busy="true"
+    >
+      <div
+        v-for="n in 6"
+        :key="n"
+        class="aspect-[3/4] animate-pulse rounded-xl bg-paper-200"
+      />
+    </div>
+
+    <TransitionGroup
+      v-else
+      tag="div"
+      class="grid gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3"
+      enter-active-class="transition duration-300"
+      enter-from-class="opacity-0 translate-y-2"
+    >
+      <Book
+        v-for="book in filteredBooks"
+        :key="book.title"
+        :title="book.title"
+        :author="book.author"
+        :summary="book.summary"
+        :color="book.color"
+        :link="book.link"
+        :tags="book.tags"
+      />
+    </TransitionGroup>
+  </div>
+</template>

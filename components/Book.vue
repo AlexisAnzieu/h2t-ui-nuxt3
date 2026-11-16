@@ -1,147 +1,115 @@
+<script setup lang="ts">
+import { bookThemes, type BookTheme } from "~/data/bookThemes";
+
+const props = withDefaults(
+  defineProps<{
+    title: string;
+    author: string;
+    summary: string;
+    color?: BookTheme;
+    link?: string;
+    tags?: string[];
+  }>(),
+  { color: "blue", tags: () => [] }
+);
+
+const theme = computed(() => bookThemes[props.color] ?? bookThemes.blue);
+const isFlipped = ref(false);
+
+// Survol à la souris uniquement : au toucher, c'est le clic qui retourne le livre
+const onPointer = (e: PointerEvent, value: boolean) => {
+  if (e.pointerType === "mouse") isFlipped.value = value;
+};
+</script>
+
 <template>
   <div
-    class="book-container w-64 h-96 perspective-1000"
-    @mouseenter="isFlipped = true"
-    @mouseleave="isFlipped = false"
-    :aria-label="ariaLabel"
+    class="group aspect-[3/4] w-full [perspective:1400px]"
+    @pointerenter="onPointer($event, true)"
+    @pointerleave="onPointer($event, false)"
   >
     <div
-      class="book relative w-full h-full transition-transform duration-1000 transform-style-3d"
-      :class="{ 'rotate-y-180': isFlipped }"
+      class="relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] [transform-style:preserve-3d]"
+      :class="isFlipped && '[transform:rotateY(180deg)]'"
     >
-      <!-- Front Cover -->
-      <div
-        class="absolute w-full h-full backface-hidden rounded-r-lg shadow-2xl flex flex-col justify-between p-6"
-        :style="coverStyle"
-        aria-label="Book front cover"
+      <!-- Couverture -->
+      <button
+        type="button"
+        class="absolute inset-0 flex flex-col overflow-hidden rounded-r-xl rounded-l-sm text-left text-white shadow-lift [backface-visibility:hidden]"
+        :class="theme.cover"
+        :aria-expanded="isFlipped"
+        :aria-label="`${props.title}, ${props.author}. Afficher le résumé`"
+        :inert="isFlipped || undefined"
+        @click="isFlipped = true"
       >
-        <h2 class="text-3xl font-extrabold text-white">{{ title }}</h2>
-        <p class="text-lg text-white">{{ author }}</p>
-        <div class="flex flex-wrap mt-4">
-          <span
-            v-for="tag in tags"
-            :key="tag"
-            class="bg-white text-black text-xs font-semibold mr-2 mb-2 px-3 py-1 rounded-full shadow-sm"
-          >
-            {{ tag }}
+        <!-- Dos du livre -->
+        <span
+          class="absolute inset-y-0 left-0 w-3 bg-black/20 shadow-[inset_-2px_0_4px_rgb(0_0_0/0.15)]"
+          aria-hidden="true"
+        />
+        <span class="flex h-full flex-col p-6 pl-8">
+          <span class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">
+              {{ theme.label }}
+            </span>
+            <span class="h-2 w-2 rounded-full bg-white/70" aria-hidden="true" />
           </span>
-        </div>
-      </div>
+          <span
+            class="mt-auto text-balance font-display text-3xl font-extrabold leading-[1.05] tracking-tight"
+          >
+            {{ props.title }}
+          </span>
+          <span class="mt-3 text-white/80">{{ props.author }}</span>
+          <span class="mt-6 h-px w-full bg-white/25" aria-hidden="true" />
+          <span class="mt-4 flex flex-wrap gap-1.5">
+            <span
+              v-for="tag in props.tags.slice(0, 3)"
+              :key="tag"
+              class="rounded-full bg-white/15 px-2.5 py-0.5 text-xs text-white"
+            >
+              {{ tag }}
+            </span>
+          </span>
+        </span>
+      </button>
 
-      <!-- Spine -->
+      <!-- Quatrième de couverture -->
       <div
-        class="absolute left-0 w-6 h-full transform -translate-x-full flex items-center justify-center shadow-inner"
-        :style="coverStyle"
-        aria-hidden="true"
-      ></div>
-
-      <!-- Back Cover -->
-      <div
-        class="absolute w-full h-full backface-hidden rounded-l-lg shadow-2xl p-6 transform rotate-y-180 flex flex-col justify-between"
-        :style="coverStyle"
-        aria-label="Book back cover"
+        class="absolute inset-0 flex flex-col overflow-hidden rounded-l-xl rounded-r-sm bg-white p-6 shadow-lift ring-1 ring-paper-200 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+        :inert="!isFlipped || undefined"
       >
-        <div>
-          <h3 class="text-2xl font-semibold mb-4 text-white">Résumé</h3>
-          <p class="text-sm text-white">{{ summary }}</p>
+        <div class="flex items-center justify-between">
+          <span class="eyebrow">Résumé</span>
+          <button
+            type="button"
+            class="grid h-8 w-8 place-items-center rounded-full text-plum-500 transition-colors hover:bg-paper-100 hover:text-plum-900"
+            aria-label="Revenir à la couverture"
+            @click="isFlipped = false"
+          >
+            <UiIcon name="close" :size="16" />
+          </button>
         </div>
-
-        <button
-          class="px-4 py-2 bg-white text-black font-semibold rounded shadow-md hover:bg-gray-200"
-          @click="redirectToLink"
+        <p class="mt-1 font-display text-lg font-bold leading-tight">
+          {{ props.title }}
+        </p>
+        <p class="mt-3 flex-1 overflow-y-auto text-[15px] leading-relaxed text-plum-600">
+          {{ props.summary }}
+        </p>
+        <div class="mt-4 flex flex-wrap gap-1.5">
+          <UiBadge v-for="tag in props.tags" :key="tag">{{ tag }}</UiBadge>
+        </div>
+        <UiButton
+          v-if="props.link"
+          :href="props.link"
+          new-tab
+          variant="dark"
+          size="sm"
+          icon="arrow-up-right"
+          class="mt-5 w-full"
         >
-          Acheter
-        </button>
+          Se procurer le livre
+        </UiButton>
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from "vue";
-import { defineProps } from "vue";
-
-const props = defineProps({
-  title: String,
-  author: String,
-  summary: String,
-  color: {
-    type: String,
-    default: "blue",
-    validator: (value) => ["blue", "green", "purple"].includes(value),
-  },
-  link: String,
-  tags: {
-    type: Array,
-    default: () => [],
-  },
-});
-
-const isFlipped = ref(false);
-
-// Computed property for dynamic aria-label
-const ariaLabel = computed(() =>
-  isFlipped.value
-    ? "Showing book summary. Hover to see front cover."
-    : "Showing book cover. Hover to see summary."
-);
-
-// Color values
-const colors = {
-  blue: {
-    500: "#4299e1",
-    700: "#2b6cb0",
-  },
-  green: {
-    500: "#48bb78",
-    700: "#2f855a",
-  },
-  purple: {
-    500: "#b794f4",
-    700: "#805ad5",
-  },
-};
-
-// Computed property for dynamic styles
-const coverStyle = computed(() => ({
-  background: `linear-gradient(to right, ${colors[props.color][500]}, ${
-    colors[props.color][700]
-  })`,
-}));
-
-const redirectToLink = () => {
-  if (props.link) {
-    window.location.href = props.link;
-  }
-};
-</script>
-
-<style scoped>
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.transform-style-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
-.book-container {
-  transition: transform 0.5s;
-}
-
-.shadow-2xl {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-}
-
-.shadow-inner {
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
-}
-</style>

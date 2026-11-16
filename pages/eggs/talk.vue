@@ -1,132 +1,80 @@
+<script setup lang="ts">
+useSeoMeta({
+  title: "Talk",
+  ogTitle: "H2T.talk",
+  description: "H2TALK, le podcast sans préparation du réseau H2T",
+  ogImage: "/images/facebook-logo-OG-talk.png",
+});
+
+const episodes = [
+  {
+    number: "02",
+    title: "H2TALK Deux",
+    season: "Saison 3",
+    description:
+      "Instants de partage entre quatre femmes : la place de la femme dans la société, la fatigue morale liée à l'hypersensibilité, l'acceptation des réalités de chacun, la place de l'éducation dans le patriarcat… Merci à Perle, Ksénia, Camille et Pauline pour cet échange à cœur ouvert.",
+    src: "https://open.spotify.com/embed/episode/78vCbGHRUVy0VEddGA1Sb5?utm_source=generator",
+  },
+  {
+    number: "01",
+    title: "H2TALK Un",
+    season: "Saison 2",
+    description:
+      "Tour de passe-passe écologique, spirituel, éducatif et rêveur entre les copains Thomas, Alexis, Victor, Pierre et Aymeric.",
+    src: "https://open.spotify.com/embed-podcast/episode/49adm7U6GQvgdmZVqafQXJ",
+  },
+  {
+    number: "00",
+    title: "H2TALK Zéro",
+    season: "Saison 1",
+    description:
+      "Tour de passe-passe écologique, spirituel, éducatif et rêveur entre les copains du Plateau Clémentin, Hugo, Sandro et Alexis.",
+    src: "https://open.spotify.com/embed-podcast/episode/3LfY19oLQZZGrWhWvssp12",
+  },
+];
+</script>
+
 <template>
-  <div class="flex justify-center mt-10">
-    <div class="w-full lg:w-5/6 p-4">
-      <div class="card bg-white shadow-lg rounded-lg mb-4">
-        <div
-          class="card-header bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-t-lg p-4"
-          id="headingDeux"
-        >
-          <h2 class="mb-0">
-            <button
-              class="btn btn-link btn-block text-left text-white font-bold focus:outline-none"
-              type="button"
+  <div>
+    <UiPageHeader eyebrow=".talk" title="Zéro préparation, zéro sujet, zéro expérience.">
+      H2TALK, c'est le podcast de la communauté : on s'assoit, on lance
+      l'enregistrement, et on voit où la conversation nous emmène.
+    </UiPageHeader>
+
+    <div class="space-y-6">
+      <UiCard
+        v-for="episode in episodes"
+        :key="episode.number"
+        as="article"
+        padding="none"
+        class="grid md:grid-cols-[1fr_1.1fr]"
+      >
+        <div class="flex flex-col p-6 md:p-8">
+          <div class="mb-6 flex items-center gap-3">
+            <span
+              class="grid h-11 w-11 place-items-center rounded-full bg-brand-500 text-white"
+              aria-hidden="true"
             >
-              H2TALK DEUX
-            </button>
-          </h2>
-        </div>
-        <div
-          class="show"
-          aria-labelledby="headingDeux"
-          data-parent="#accordionExample"
-        >
-          <div class="card-body p-6 bg-gray-50">
-            <div class="description">
-              <div class="text-left mb-5 text-gray-700">
-                SAISON Trois: Zéro préparation, zéro sujet prédéfini, zéro
-                expérience. Instants de partage entre quatre femmes concernant
-                la place de la femme dans la société, la fatigue morale liée à
-                l'hypersensibilité, l'acceptation des réalités de chacun, la
-                place de l'éducation dans le patriarcat... Merci à Perle,
-                Ksénia, Camille et Pauline pour cet échange à coeur ouvert.
-              </div>
-              <iframe
-                title="S02"
-                src="https://open.spotify.com/embed/episode/78vCbGHRUVy0VEddGA1Sb5?utm_source=generator"
-                :width="isMobile ? '100%' : '60%'"
-                height="232"
-                allow="encrypted-media"
-                class="mx-auto rounded-lg shadow-md"
-              ></iframe>
-            </div>
+              <UiIcon name="mic" :size="20" />
+            </span>
+            <UiBadge tone="plum">{{ episode.season }}</UiBadge>
           </div>
-        </div>
-      </div>
-      <div class="card bg-white shadow-lg rounded-lg mb-4">
-        <div
-          class="card-header bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-t-lg p-4"
-          id="headingUn"
-        >
-          <h2 class="mb-0">
-            <button
-              class="btn btn-link btn-block text-left text-white font-bold focus:outline-none collapsed"
-              type="button"
-            >
-              H2TALK UN
-            </button>
+          <h2 class="font-display text-3xl font-bold tracking-tight">
+            {{ episode.title }}
           </h2>
+          <p class="mt-3 leading-relaxed text-plum-600">
+            {{ episode.description }}
+          </p>
+          <span
+            class="mt-auto pt-8 font-display text-7xl font-extrabold leading-none tracking-tighter text-paper-200"
+            aria-hidden="true"
+            >#{{ episode.number }}</span
+          >
         </div>
-        <div aria-labelledby="headingUn" data-parent="#accordionExample">
-          <div class="card-body p-6 bg-gray-50">
-            <div class="description">
-              <div class="text-left mb-5 text-gray-700">
-                SAISON Deux: Zéro préparation, zéro sujet prédéfini, zéro
-                expérience. Tour de passe-passe écologique, spirituel, éducatif
-                et rêveur entre les copains Thomas, Alexis, Victor, Pierre et
-                Aymeric
-              </div>
-              <iframe
-                title="S02"
-                src="https://open.spotify.com/embed-podcast/episode/49adm7U6GQvgdmZVqafQXJ"
-                :width="isMobile ? '100%' : '60%'"
-                height="232"
-                allow="encrypted-media"
-                class="mx-auto rounded-lg shadow-md"
-              ></iframe>
-            </div>
-          </div>
+        <div class="flex items-center bg-paper-100 p-4 md:p-6">
+          <UiEmbed :src="episode.src" :title="episode.title" :height="232" />
         </div>
-      </div>
-      <div class="card bg-white shadow-lg rounded-lg mb-4">
-        <div
-          class="card-header bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-t-lg p-4"
-          id="headingZero"
-        >
-          <h2 class="mb-0">
-            <button
-              class="btn btn-link btn-block text-left text-white font-bold focus:outline-none collapsed"
-              type="button"
-            >
-              H2TALK ZERO
-            </button>
-          </h2>
-        </div>
-        <div aria-labelledby="headingZero" data-parent="#accordionExample">
-          <div class="card-body p-6 bg-gray-50">
-            <div class="description">
-              <div class="text-left mb-5 text-gray-700">
-                Zéro préparation, zéro sujet prédéfini, zéro expérience. Tour de
-                passe-passe écologique, spirituel, éducatif et rêveur entre les
-                copains du Plateau Clémentin, Hugo, Sandro et Alexis.
-              </div>
-              <iframe
-                title="S01"
-                src="https://open.spotify.com/embed-podcast/episode/3LfY19oLQZZGrWhWvssp12"
-                :width="isMobile ? '100%' : '60%'"
-                height="232"
-                allow="encrypted-media"
-                class="mx-auto rounded-lg shadow-md"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
+      </UiCard>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "TalkPage",
-};
-</script>
-
-<style scoped>
-.description {
-  padding: 20px;
-}
-
-iframe {
-  border: 0;
-}
-</style>

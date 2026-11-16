@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-paper font-sans text-plum-900 antialiased;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper;
+  }
+
+  ::selection {
+    @apply bg-brand-500 text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-paper;
+  }
+
+  iframe {
+    border: 0;
+  }
+}
+
+@layer components {
+  /* Liens dans le texte courant */
+  .link {
+    @apply font-medium text-plum-900 underline decoration-brand-500 decoration-2 underline-offset-4 transition-colors hover:text-brand-600;
+  }
+
+  /* Titre de section secondaire */
+  .section-title {
+    @apply font-display text-2xl font-bold tracking-tight text-plum-900;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.18em] text-plum-500;
+  }
+}
+
+/* Toasts (vue3-toastify) alignés sur la charte */
+:root {
+  --toastify-color-light: #ffffff;
+  --toastify-text-color-light: #1a1128;
+  --toastify-color-success: #2f6b4f;
+  --toastify-color-error: #e3193d;
+  --toastify-color-info: #4b3a66;
+  --toastify-font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+.Toastify__toast {
+  border-radius: 14px;
+  box-shadow: 0 16px 32px -8px rgb(26 17 40 / 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

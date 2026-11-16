@@ -1,101 +1,128 @@
+<script setup lang="ts">
+import { mailto } from "~/data/navigation";
+import type { BadgeTone } from "~/components/ui/UiBadge.vue";
+
+useSeoMeta({
+  title: "Transition",
+  ogTitle: "H2T.transition",
+  description: "Initiatives écologiques et solidaires soutenues par la communauté H2T",
+});
+
+interface Initiative {
+  title: string;
+  tag: string;
+  tone: BadgeTone;
+  description: string;
+  link: string;
+  linkLabel: string;
+  /** Sujet du mail pour participer via H2T */
+  contact?: string;
+}
+
+const initiatives: Initiative[] = [
+  {
+    title: "Fresque du Climat",
+    tag: "Atelier hébergé",
+    tone: "brand",
+    description:
+      "Nous hébergeons des ateliers de la Fresque du Climat. Depuis fin 2018, l'association œuvre pour embarquer individus et organisations dans la transition, en diffusant une compréhension partagée du défi climatique, en France et dans plus de 40 pays. Le nombre de personnes sensibilisées double tous les 5 mois.",
+    link: "https://fresqueduclimat.org/",
+    linkLabel: "En savoir plus",
+    contact: "Je souhaite participer à la Fresque du Climat",
+  },
+  {
+    title: "Formation Les Primitifs",
+    tag: "Formation",
+    tone: "forest",
+    description:
+      "Certains membres participent activement à ces formations. Depuis 2007, Les Primitifs vont au-delà du cours de survie : remplacer la peur et les mythes par des connaissances, des traditions et une curiosité contagieuse. Les tarifs sont maintenus au plus bas, l'objectif étant la diffusion.",
+    link: "https://www.lesprimitifs.ca/nos-formations",
+    linkLabel: "En savoir plus",
+    contact: "Je souhaite participer à une formation Les Primitifs",
+  },
+  {
+    title: "Documentaires",
+    tag: "Ressource",
+    tone: "ocean",
+    description:
+      "Nous avons référencé un bon nombre de documentaires permettant d'appréhender les enjeux des changements climatiques et sociétaux.",
+    link: "https://docs.google.com/spreadsheets/d/1lhk0222MjeaAeHhq2EMPAKu8Xzei3IeFi7ez-DjdBXM/edit?usp=sharing",
+    linkLabel: "Accéder à la liste",
+  },
+  {
+    title: "Activités au Québec",
+    tag: "Projet H2T",
+    tone: "plum",
+    description:
+      "Un site centralisant des activités à faire au Québec, pour répondre au besoin d'évasion tout en évitant de prendre l'avion.",
+    link: "https://acti.quebec/",
+    linkLabel: "Accéder à Actï",
+  },
+  {
+    title: "Santropol Roulant",
+    tag: "Partenaire",
+    tone: "clay",
+    description:
+      "Un centre alimentaire et une communauté intergénérationnelle : faire pousser, préparer et livrer de la nourriture aux Montréalais·es, pour renforcer la sécurité alimentaire et l'inclusion sociale en ville.",
+    link: "https://santropolroulant.org/fr/",
+    linkLabel: "Accéder au site",
+  },
+  {
+    title: "Les Compagnons Maraîchers·ères",
+    tag: "Bénévolat",
+    tone: "forest",
+    description:
+      "Des équipes de volontaires de la ville, organisées et motivées, qui viennent prêter main-forte ponctuellement sur des fermes écologiques de proximité.",
+    link: "https://compagnonsmaraichers.org/",
+    linkLabel: "Accéder au site",
+  },
+];
+</script>
+
 <template>
-  <div class="layout">
-    <div
-      class="col-span-12 md:col-span-6 lg:col-span-4 p-4"
-      v-for="(item, index) in items"
-      :key="index"
-    >
-      <div
-        class="bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105"
+  <div>
+    <UiPageHeader eyebrow=".transition" title="Agir localement, ensemble.">
+      Ateliers, formations, ressources et partenaires : les initiatives
+      écologiques et solidaires que la communauté porte ou soutient.
+    </UiPageHeader>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      <UiCard
+        v-for="item in initiatives"
+        :key="item.title"
+        as="article"
+        padding="lg"
+        interactive
+        class="flex flex-col"
       >
-        <div class="font-bold text-2xl mb-4 text-gray-800">
+        <UiBadge :tone="item.tone" class="self-start">{{ item.tag }}</UiBadge>
+        <h2 class="mt-4 font-display text-2xl font-bold tracking-tight">
           {{ item.title }}
-        </div>
-        <div class="text-left text-gray-600">
+        </h2>
+        <p class="mt-3 flex-1 leading-relaxed text-plum-600">
           {{ item.description }}
-          <a
-            v-if="item.contact"
-            :href="`mailto:contact@h2t.club?subject=${item.contact}`"
-            class="text-blue-500 underline hover:text-blue-700"
-            >Contactez-nous</a
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <UiButton
+            :href="item.link"
+            new-tab
+            variant="dark"
+            size="sm"
+            icon="arrow-up-right"
           >
-          <br /><br />
-          <a :href="item.link">
-            <button
-              class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
-            >
-              {{ item.buttonText }}
-            </button>
-          </a>
+            {{ item.linkLabel }}
+          </UiButton>
+          <UiButton
+            v-if="item.contact"
+            :href="mailto(item.contact)"
+            variant="ghost"
+            size="sm"
+            icon-left="mail"
+          >
+            Participer
+          </UiButton>
         </div>
-      </div>
+      </UiCard>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  auth: false,
-  data() {
-    return {
-      items: [
-        {
-          title: "Fresque du Climat",
-          description: `Nous hébergeons des ateliers de la Fresque du Climat. Si vous êtes interessés! Depuis fin 2018, l’association la Fresque du Climat œuvre pour embarquer tous les individus et toutes les organisations dans la transition, en permettant la diffusion rapide d’une compréhension partagée du défi que représente le changement climatique. Ils réalisent cette mission d’éducation et de sensibilisation auprès de tous les publics, en France et dans plus de 40 pays. L’efficacité de cet outil pédagogique et sa licence d’utilisation ont facilité sa diffusion exponentielle, avec un doublement du nombre de personnes sensibilisées tous les 5 mois.`,
-          contact: "Je souhaite participer à la Fresque du Climat",
-          link: "https://fresqueduclimat.org/",
-          buttonText: "En savoir plus",
-        },
-        {
-          title: "Formation Les primitifs",
-          description: `Certains membres participent activement à ces formations. Depuis 2007, l’expérience des Primitifs va au-delà du cours de survie. Leur vision de la nature n’est pas naïve ou romantique, elle enseigne simplement comment vivre comme le faisaient nos ancêtres. La philosophie des Primitifs est de remplacer la peur et les mythes par des connaissances, des traditions, une conscience nouvelle et une curiosité contagieuse. En ce qui concerne les formations régulières, les tarifs sont maintenus au plus bas puisque l' objectif est la diffusion : le savoir appartient à l’enfant de la terre qui sommeille en chacun de nous.`,
-          contact: "Je souhaite participer à la Fresque du Climat",
-          link: "https://www.lesprimitifs.ca/nos-formations",
-          buttonText: "En savoir plus",
-        },
-        {
-          title: "Documentaires",
-          description: `Nous avons référencé un bon nombre de documentaires permettant d'appréhender les enjeux des changements climatiques et sociétaux.`,
-          link: "https://docs.google.com/spreadsheets/d/1lhk0222MjeaAeHhq2EMPAKu8Xzei3IeFi7ez-DjdBXM/edit?usp=sharing",
-          buttonText: "Accéder à la liste",
-        },
-        {
-          title: "Activités au Québec",
-          description: `Nous avons développé un site centralisant quelques activités à faire au Québec, afin de faciliter ce besoin d'évasion tout en évitant de prendre l'avion.`,
-          link: "https://acti.quebec/",
-          buttonText: "Accéder à Actï",
-        },
-        {
-          title: "Santropol Roulant",
-          description: `Santropol Roulant est un centre alimentaire et une communauté intergénérationnelle. En faisant pousser de la nourriture, en la préparant, et en la livrant aux Montréalaises et Montréalais, nous créons un continuum de services inspirants et engageants au bénéfice de la communauté, et nous renforçons le tissu social montréalais en faisant grandir la sécurité alimentaire en ville et l’inclusion sociale.`,
-          link: "https://santropolroulant.org/fr/",
-          buttonText: "Accéder au site",
-        },
-        {
-          title: "Les Compagnons Maraichers·ères",
-          description: `Ce sont des équipes organisées et motivées de volontaires de la ville qui viennent prêter main-forte de façon ponctuelle sur des fermes écologiques de proximité.`,
-          link: "https://compagnonsmaraichers.org/",
-          buttonText: "Accéder au site",
-        },
-      ],
-    };
-  },
-};
-</script>
-
-<style>
-.layout {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1.5rem;
-  padding: 2rem;
-  text-align: center;
-}
-
-@media screen and (max-width: 600px) {
-  .layout {
-    grid-template-columns: repeat(1, 1fr);
-    padding: 1rem;
-  }
-}
-</style>

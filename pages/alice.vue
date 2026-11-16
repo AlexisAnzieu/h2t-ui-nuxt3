@@ -18,6 +18,9 @@
 <script setup>
 import { ref } from "vue";
 
+// Expérience plein écran, sans la barre de navigation
+definePageMeta({ layout: false });
+
 const isDoorOpen = ref(false);
 const doorImageUrl = "/images/alice/door.jpeg";
 const hiddenImageUrl = "/images/alice/stairs.jpg";
